@@ -8,11 +8,21 @@ Magium Recrystallized (Br3nnabee)
   "format": "Harlowe",
   "format-version": "3.3.9",
   "start": "splash1",
+  "tag-colors": {
+    "splash1": "orange",
+    "splash2": "orange",
+    "splash3": "orange",
+    "header": "red",
+    "statsPage": "yellow",
+    "mainMenuPage": "yellow",
+    "statsLogic": "orange",
+    "utils": "orange"
+  },
   "zoom": 0.6
 }
 
 
-:: b4ch1p1 {"position":"600,350","size":"200,200"}
+:: b4ch1p1 {"position":"800,350","size":"200,200"}
 <!-- As a reminder of the current state of the story, the party is on their way to Galamir for a summit concerning the incoming war with Tyrath's forces, and to deliver the pinecone. The current party consists of Barry, Kate, Daren, Hadrik, Flower/Illuna, Akarra, Diane, and Leo the Leopard. Azarius, the sage of the west, has just saved the party by blackmailing Eiden with the threat of destroying his mysterious spells across the island, which are also set to be destroyed if Azarius himself dies.
 
 The God of time's second ritual should happen sometime in the near future (It happens at Galamir according to authorman's family, but obviously the party doesn’t know that), and it will teleport Melindra and Leila back to the rest of the party.
@@ -71,7 +81,7 @@ Azarius seems to really enjoy leading us on, because once again his face cracks 
 [[Continue->b4ch1p2]]
 
 
-:: b4ch1p2 {"position":"900,350","size":"100,200"}
+:: b4ch1p2 {"position":"1100,350","size":"100,200"}
 <!--Azarius tells his backstory, which largely paints him as incredibly prideful and ambitious, but not overtly evil in the same way a greedy noble is, more so just determined to usurp the gods in the same way as Barry with magic, or Brinhorn with defeating Azarius.
 
 The characters occasionally interrupt him to ask questions, which he answers. This may be done over the course of multiple continue selections, and/or dialogue changes that could be easily implemented, the way Magium typically does for long expository sections.
@@ -109,7 +119,7 @@ Just as I finish forming that thought, Daren prods me and whispers, "Sounds a li
 [[Keep listening->b4ch1p3]]
 
 
-:: b4ch1p3 {"position":"1300,350","size":"100,200"}
+:: b4ch1p3 {"position":"1500,350","size":"100,200"}
 <!--Azarius continues his backstory explanation, now finally reaching how he gained the sage title. 
 
 As he talks about Brinhorn, Barry realizes Azarius has some insight into a small detail of Brinhorn's life that Barry doesn't know.
@@ -138,7 +148,7 @@ His answer? It wasn't the title. It was defeating me, who he had put on this ped
 [[Stay silent->b4ch1p4]]
 
 
-:: b4ch1p3.1 {"position":"1500,450","size":"100,100"}
+:: b4ch1p3.1 {"position":"1700,450","size":"100,100"}
 (set: $Azarius_Brinhorn_Conversation to 1) 
 
 The conversation goes on a brief tangent as Barry and Azarius talk about Brinhorn, whom Azarius holds as a close friend despite, or rather because of, their rivalry. The aside characterizes Brinhorn a bit more and confirms to the group that he is in the tournament, as Azarius mentions that he and Brinhorn exchange letters regularly and that their last contact was wishing each other luck in the tournament.
@@ -148,7 +158,7 @@ As this information, both this slide and slide 4-3, may be important to dialogue
 [[continue->b4ch1p3.2]]
 
 
-:: b4ch1p3.2 {"position":"1700,450","size":"100,100"}
+:: b4ch1p3.2 {"position":"1900,450","size":"100,100"}
 Hadrick brags for Barry, telling Azarius that Barry was Brinhorn's apprentice for a time.
 
 Azarius, intrigued, asks more. As Barry speaks to him, Azarius seems to realize something. He informs Barry that Brinhorn still talks about him to this day, calling him his greatest apprentice, and saying that it was an absolute shame he left. 
@@ -158,7 +168,7 @@ Azarius then congratulates Barry on managing to become a mage after all this tim
 [[continue->b4ch1p4]]
 
 
-:: b4ch1p3.a {"position":"1100,275","size":"100,100"}
+:: b4ch1p3.a {"position":"1300,275","size":"100,100"}
 <!--Barry asks about some minor detail about the backstory that slightly expands upon Azarius as a character.
 
 Some back-and-forth dialogue between other characters ensues.
@@ -175,7 +185,7 @@ After that, it was all about Memphir. His symbol was carved into every nook and 
 (hidden:)[[Continue->b4ch1p3]]
 
 
-:: b4ch1p3.b {"position":"1100,475","size":"100,100"}
+:: b4ch1p3.b {"position":"1300,475","size":"100,100"}
 <!-- Barry asks about some minor detail about the backstory that slightly expands upon the world building.
 
 Some back-and-forth dialogue between other characters ensues. 
@@ -198,7 +208,7 @@ Daren quickly interjects. "That's where my ex-sage master was from! The other on
 (hidden:)[[Continue->b4ch1p3]]
 
 
-:: b4ch1p3.c {"position":"1100,625","size":"100,100"}
+:: b4ch1p3.c {"position":"1300,625","size":"100,100"}
 <!--Barry makes some smartass quip that ultimately leads to someone (probably Kate) scolding and or hitting Barry. 
 
 Diane laughs at the exchange. 
@@ -217,7 +227,7 @@ Diane, clearly still not used to the dynamics of the group yet, lets out a small
 (hidden:)[[Continue->b4ch1p3]]
 
 
-:: b4ch1p4 {"position":"1900,350","size":"200,200"}
+:: b4ch1p4 {"position":"2100,350","size":"200,200"}
 The backstory reaches its conclusion. Akarra keeps chiming in throughout the last parts.
 
 The group members ask several questions, which Azarius answers. The most notable of these questions is asked by Illuna, who asks if his Henry knows about any of his backstory.
@@ -233,25 +243,25 @@ After a few questions from the others, Barry gets a chance to ask his own.
 [[Don't ask a question->b4ch1p5e]]
 
 
-:: b4ch1p5a {"position":"2250,100","size":"100,100"}
+:: b4ch1p5a {"position":"2450,100","size":"100,100"}
 Azarius responds that he won't participate in their training directly, but is quite open about the fact that he will most certainly listen in and possibly talk with Akarra occasionally.
 
 [[continue->b4ch1p6]]
 
 
-:: b4ch1p5b {"position":"2250,250","size":"100,100"}
+:: b4ch1p5b {"position":"2450,250","size":"100,100"}
 Azarius responds that he might, but to confirm if they're actually useful he'll need to talk to someone knowledgeable on the subject like Akarra.
 
 [[continue->b4ch1p6]]
 
 
-:: b4ch1p5c {"position":"2250,400","size":"100,100"}
+:: b4ch1p5c {"position":"2450,400","size":"100,100"}
 Azarius agrees and says that he was actually going to propose something quite similar himself.
 
 [[continue->b4ch1p6]]
 
 
-:: b4ch1p5d {"position":"2250,550","size":"100,100"}
+:: b4ch1p5d {"position":"2450,550","size":"100,100"}
 Azarius takes the joke in stride and laughs, before turning the joke around to make fun of Barry in some regard.
 
 Afterwards he suggests that he and Akarra exchange magical knowledge, as it may be useful to both groups.
@@ -259,13 +269,13 @@ Afterwards he suggests that he and Akarra exchange magical knowledge, as it may 
 [[continue->b4ch1p6]]
 
 
-:: b4ch1p5e {"position":"2250,700","size":"100,100"}
+:: b4ch1p5e {"position":"2450,700","size":"100,100"}
 Once the questions die down, Azarius suggests that he and Akarra exchange magical knowledge, as it may be useful to both groups.
 
 [[continue->b4ch1p6]]
 
 
-:: b4ch1p6 {"position":"2500,350","size":"100,200"}
+:: b4ch1p6 {"position":"2700,350","size":"100,200"}
 (if:$Magic_Sense >= 3)[Barry can sense that there's some Azarius is hiding in his statements about wanting to talk to Akarra, and decides it would be best to keep it to himself for now, and try to covertly tell the others/listen in on the conversation later.
 
 The check is sense 3 because Azarius can conceal his aura well but doesn't know the advanced technique that Diane and the King of the Underground do.]
@@ -280,7 +290,7 @@ After a few more minutes of waiting and talking, Henry finally shows up. Azarius
 [[continue->b4ch1p7]]
 
 
-:: b4ch1p7 {"position":"2700,350","size":"200,200"}
+:: b4ch1p7 {"position":"2900,350","size":"200,200"}
 Once the conversations die down the group begins to travel towards Galamir as there is still time left in the day and they want to be away from the site of their battle.
 
 While on the road the party wonders what Galamir is like, and Diane tries her best to answer with what little she knows about the city. In short all she knows is that the city has fallen into some hard times and that some of the other kings even view the measures in place as too strict and authoritarian, though she doesn't know the specifics.
@@ -297,44 +307,76 @@ It's also worth noting that we aren't limited to doing 11/12 chapters. There's n
 
 
 :: header [header] {"position":"300,400","size":"200,100"}
-<div id="header">
+(enchant: ?link, (t8n-arrive: "instant"))[<div id="header">
     |mainmenu>[(color: white)[[[MAIN MENU->mainMenuPage]]]]
     <div id="book-and-chapter">
       <div id="book" style="font-size: 12px;">[(color: white)[BOOK 4]]</div>
       <div id="chapter" style="display: inline-block;">[(color: white)[CHAPTER 1]]</div>
     </div>
     |stats>[(color: white)[[[STATS->statsPage]]]]
-</div>
+</div>]
 
 
-:: mainMenuPage {"position":"300,550","size":"200,100"}
+:: mainMenuPage [mainMenuPage] {"position":"300,550","size":"200,100"}
 (link-goto: "Start Game", "b4ch1p1")
 
 
-:: splash1 [splash1] {"position":"100,250","size":"100,100"}
+:: splash1 [splash1 noHeader] {"position":"100,250","size":"100,100"}
 <!-- Credit To Aenimus for the splash screen code -->
 (live: 1s)[(goto: "splash2")]
 (change: ?Passage, via (t8n: "dissolve"))
 
 <img id="splashbg" src="" style="position: fixed; top: 50%; left: 0; transform: translateY(-50%); width: 100%; height: auto; z-index: 999;">
 
+<img id="splashimghidden" src="https://i.ibb.co/RYxLwtD/Pv-QPYU9ky-SDh-Bcqp-3-cc-YPHu1-X3n-MHsxn41n-GXcu-Gnh-Z1-Z6-RA6-Dn-Cc-Quto-Jrit-RQ-1212588325.png" style="width: 0%; height: 0%">
 
-:: splash2 [splash2] {"position":"100,400","size":"100,100"}
+
+:: splash2 [splash2 noHeader] {"position":"100,400","size":"100,100"}
 (live: 3s)[(t8n-depart: "dissolve")(goto: "splash3")]
 (change: ?Passage, via (t8n: "dissolve")+(transition-time: 2s))
 
 <img id="splashimg" src="https://i.ibb.co/RYxLwtD/Pv-QPYU9ky-SDh-Bcqp-3-cc-YPHu1-X3n-MHsxn41n-GXcu-Gnh-Z1-Z6-RA6-Dn-Cc-Quto-Jrit-RQ-1212588325.png">
 
 
-:: splash3 [splash3] {"position":"100,550","size":"100,100"}
+:: splash3 [splash3 noHeader] {"position":"100,550","size":"100,100"}
 (live: 1s)[(goto: "mainMenuPage")]
 (change: ?Passage, via (t8n: "dissolve"))
+(live:0.9s)[(dialog: [PREFACE: This is an alpha version of an entry for Challenge #2 in the community continuation of Magium. The name, code, content, and UI presented here reflect only a personal interpretation of the material provided by Authorman, his family, and an outline contributed by @whatevercomic07. While some aspects of this content may potentially become part of the approved canon, they are not currently representative of the entire community's work or opinions. Please be mindful of potential spoilers.
+
+– Br3nnabee], "Understood.")]
 
 <img id="splashbg" src="" style="position: fixed; top: 50%; left: 0; transform: translateY(-50%); width: 100%; height: auto; z-index: 999;">
 
 
-:: statsPage {"position":"300,250","size":"200,100"}
-Test
+:: statsPage [statsPage] {"position":"300,250","size":"200,100"}
+(set: $counter to 0)
+
+You have clicked the button |counterDisplay>[$counter] times.
+
+(link-repeat: "Plus One")[(set:$counter to it + 1) (replace:?counterDisplay)[$counter]]
+
+
+:: utils [utils startup] {"position":"200,100","size":"200,100"}
+{=
+(set: $freshStats to (macro: [(set: $stats to (dm:
+	"points", 0,
+    "strength", 0,
+    "speed", 0,
+    "toughness", 0,
+    "reflexes", 0,
+    "hearing", 0,
+    "observation", 0,
+    "ancientLanguages", 0,
+    "combatTechnique", 0,
+    "premonition", 0,
+    "bluff", 0,
+    "magicalSense", 0,
+    "auraHardening", 0,
+    "magicalPower", 0,
+    "magicalKnowledge", 0
+))(out:)[]]))
+
+($freshStats:)
 
 
 :: StoryStylesheet [stylesheet]
@@ -470,9 +512,7 @@ tw-story[tags~="splash3"] {
     height: 100vh;
 }
 
-tw-story[tags~="splash1"] #header,
-tw-story[tags~="splash2"] #header,
-tw-story[tags~="splash3"] #header {
+tw-story[tags~="noHeader"] #header {
     display: none;
 }
 
@@ -486,4 +526,8 @@ tw-story[tags~="splash3"] #header {
   	margin-bottom: auto;
     margin-left: auto;
     margin-right: auto;
+}
+
+#splashimghidden {
+	display:none;
 }
