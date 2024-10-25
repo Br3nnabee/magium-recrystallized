@@ -144,6 +144,7 @@ His answer? It wasn't the title. It was defeating me, who he had put on this ped
 
 //Hold on, Brinhorn makes the same mistake over and over? Should I ask about it, or would that be pushing it?//
 
+
 [[Ask Azarius about it->b4ch1p3.1]]
 [[Stay silent->b4ch1p4]]
 
@@ -322,7 +323,7 @@ It's also worth noting that we aren't limited to doing 11/12 chapters. There's n
 
 
 :: splash1 [splash1 noHeader] {"position":"100,250","size":"100,100"}
-<!-- Credit To Aenimus for the splash screen code -->
+<!-- Credit To @aenimus_nightshade for the splash screen code -->
 (live: 1s)[(goto: "splash2")]
 (change: ?Passage, via (t8n: "dissolve"))
 
@@ -348,18 +349,228 @@ It's also worth noting that we aren't limited to doing 11/12 chapters. There's n
 <img id="splashbg" src="" style="position: fixed; top: 50%; left: 0; transform: translateY(-50%); width: 100%; height: auto; z-index: 999;">
 
 
-:: statsPage [statsPage] {"position":"300,250","size":"200,100"}
-(set: $counter to 0)
+:: statsPage [statsPage noHeader] {"position":"300,250","size":"200,100"}
+<!-- Thanks to @somnium_proxy and @hituro on the twine discord for helping me iron out the kinks <3 -->
 
-You have clicked the button |counterDisplay>[$counter] times.
+[(put: $stats into _tempStats)
+(if: _tempStats is $stats)[(set: $gameButtonText to "Return to game")](else:)[(set: $gameButtonText to "Confirm Changes")]<gameButtonText|
 
-(link-repeat: "Plus One")[(set:$counter to it + 1) (replace:?counterDisplay)[$counter]]
+<div id="stats">
+	
+    <div id="points">
+    	[Available points: (str:_tempStats's points)]<pointsDisplay|
+    </div>
+    
+    <div id="strength" class="modifiableStat">
+        [(link-rerun: "Strength: " + (str:_tempStats's strength) + "/4")
+        	[(if: _tempStats's points > 0)[
+            	(if: _tempStats's strength < 4)[
+                	(set:_tempStats's strength to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?strengthDisplay)
+                    (rerun:?pointsDisplay)
+                    (rerun:?gameButtonText)
+                    (rerun:?gameButton)
+                    ]
+                ]
+            ]
+        ]<strengthDisplay|
+    </div>
+    
+    <div id="speed" class="modifiableStat">
+        [(link-rerun: "Speed: " + (str:_tempStats's speed) + "/4")
+        	[(if: _tempStats's points > 0)[
+            	(if: _tempStats's speed < 4)[
+                	(set:_tempStats's speed to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?speedDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<speedDisplay|
+    </div>
+    
+    <div id="toughness" class="modifiableStat">
+        [(link-rerun: "Toughness: " + (str:_tempStats's toughness) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's toughness < 4)[
+                    (set:_tempStats's toughness to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?toughnessDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<toughnessDisplay|
+    </div>
+
+    <div id="reflexes" class="modifiableStat">
+        [(link-rerun: "Reflexes: " + (str:_tempStats's reflexes) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's reflexes < 4)[
+                    (set:_tempStats's reflexes to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?reflexesDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<reflexesDisplay|
+    </div>
+
+    <div id="hearing" class="modifiableStat">
+        [(link-rerun: "Hearing: " + (str:_tempStats's hearing) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's hearing < 4)[
+                    (set:_tempStats's hearing to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?hearingDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<hearingDisplay|
+    </div>
+
+    <div id="observation" class="modifiableStat">
+        [(link-rerun: "Observation: " + (str:_tempStats's observation) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's observation < 4)[
+                    (set:_tempStats's observation to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?observationDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<observationDisplay|
+    </div>
+
+    <div id="ancientLanguages" class="modifiableStat">
+        [(link-rerun: "Ancient Languages: " + (str:_tempStats's ancientLanguages) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's ancientLanguages < 4)[
+                    (set:_tempStats's ancientLanguages to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?ancientLanguagesDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<ancientLanguagesDisplay|
+    </div>
+
+    <div id="combatTechnique" class="modifiableStat">
+        [(link-rerun: "Combat Technique: " + (str:_tempStats's combatTechnique) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's combatTechnique < 4)[
+                    (set:_tempStats's combatTechnique to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?combatTechniqueDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<combatTechniqueDisplay|
+    </div>
+
+    <div id="premonition" class="modifiableStat">
+        [(link-rerun: "Premonition: " + (str:_tempStats's premonition) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's premonition < 4)[
+                    (set:_tempStats's premonition to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?premonitionDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<premonitionDisplay|
+    </div>
+
+    <div id="bluff" class="modifiableStat">
+        [(link-rerun: "Bluff: " + (str:_tempStats's bluff) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's bluff < 4)[
+                    (set:_tempStats's bluff to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?bluffDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<bluffDisplay|
+    </div>
+
+    <div id="magicalSense" class="modifiableStat">
+        [(link-rerun: "Magical Sense: " + (str:_tempStats's magicalSense) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's magicalSense < 4)[
+                    (set:_tempStats's magicalSense to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?magicalSenseDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<magicalSenseDisplay|
+    </div>
+
+    <div id="auraHardening" class="modifiableStat">
+        [(link-rerun: "Aura Hardening: " + (str:_tempStats's auraHardening) + "/4")
+            [(if: _tempStats's points > 0)[
+                (if: _tempStats's auraHardening < 4)[
+                    (set:_tempStats's auraHardening to it + 1)
+                    (set:_tempStats's points to it - 1))
+                    (rerun:?auraHardeningDisplay)
+                    (rerun:?pointsDisplay)
+                    ]
+                ]
+            ]
+        ]<auraHardeningDisplay|
+    </div>
+    
+    <div id="magicalPower">
+    	[Magical Power: (str:_tempStats's magicalPower)]<magicalPowerDisplay|
+    </div>
+    
+    <div id="magicalKnowledge">
+    	[Magical Knowledge: (str:_tempStats's magicalKnowledge)]<magicalKnowledgeDisplay|
+    </div>
+    
+    <div id="cancelButton">
+    [(link-rerun: "Cancel Changes")
+            [
+            (put: $stats into _tempStats)
+            (rerun:?strengthDisplay)
+            (rerun:?speedDisplay)
+            (rerun:?toughnessDisplay)
+            (rerun:?reflexesDisplay)
+            (rerun:?hearingDisplay)
+            (rerun:?observationDisplay)
+            (rerun:?ancientLanguagesDisplay)
+            (rerun:?combatTechniqueDisplay)
+            (rerun:?premonitionDisplay)
+            (rerun:?bluffDisplay)
+            (rerun:?magicalSenseDisplay)
+            (rerun:?auraHardeningDisplay)
+            (rerun:?pointsDisplay)
+            ]
+        ]<cancelButton|
+  </div>
+  
+  <div id="gameButton">
+  [(click-rerun:$gameButtonText)[Hi yis]]<gameButton|
+  </div>
+</div>]
+
 
 
 :: utils [utils startup] {"position":"200,100","size":"200,100"}
 {=
 (set: $freshStats to (macro: [(set: $stats to (dm:
-	"points", 0,
+	"points", 33,
     "strength", 0,
     "speed", 0,
     "toughness", 0,
@@ -372,8 +583,8 @@ You have clicked the button |counterDisplay>[$counter] times.
     "bluff", 0,
     "magicalSense", 0,
     "auraHardening", 0,
-    "magicalPower", 0,
-    "magicalKnowledge", 0
+    "magicalPower", 1,
+    "magicalKnowledge", 1
 ))(out:)[]]))
 
 ($freshStats:)
@@ -530,4 +741,10 @@ tw-story[tags~="noHeader"] #header {
 
 #splashimghidden {
 	display:none;
+}
+
+/** Styling for the stats page **/
+#stats tw-link {
+	background-color: transparent;
+  	color: black;
 }
