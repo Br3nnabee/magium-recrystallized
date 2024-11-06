@@ -165,7 +165,66 @@ tw-story[tags~="noHeader"] #header {
 #stats tw-link {
 	background-color: transparent;
   	color: black;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-tag name="splash1" color="orange"></tw-tag><tw-tag name="splash2" color="orange"></tw-tag><tw-tag name="splash3" color="orange"></tw-tag><tw-tag name="header" color="red"></tw-tag><tw-tag name="statsPage" color="yellow"></tw-tag><tw-tag name="mainMenuPage" color="yellow"></tw-tag><tw-tag name="statsLogic" color="orange"></tw-tag><tw-tag name="utils" color="orange"></tw-tag><tw-passagedata pid="1" name="b4ch1p1" tags="" position="800,350" size="200,200">&lt;!-- As a reminder of the current state of the story, the party is on their way to Galamir for a summit concerning the incoming war with Tyrath&#39;s forces, and to deliver the pinecone. The current party consists of Barry, Kate, Daren, Hadrik, Flower/Illuna, Akarra, Diane, and Leo the Leopard. Azarius, the sage of the west, has just saved the party by blackmailing Eiden with the threat of destroying his mysterious spells across the island, which are also set to be destroyed if Azarius himself dies.
+  	width: 190px;
+  	padding: 0px;
+  	font-size: 17px;
+}
+
+#stats br, #stats tw-consecutive-br {
+  display: none;
+}
+
+#stats {
+	transform: translateY(-160px) translateX(-20px);
+    display: flex;
+  	flex-direction: column;
+  	justify-content: center; 
+  	align-items: center;     
+ 	height: 80vh; 
+  	width: 100vw;
+ 	margin: 0;
+  	gap: 15px;
+}
+
+#magicalDisplays {
+  	justify-content: space-evenly;
+	display: flex;
+  	margin: 0px;
+  	font-size: 14px;
+  	color: blue;
+  	font-weight: bold;
+} 
+
+#magicalPower{
+	margin: 0px 5px 0px 0px;
+}
+
+#magicalKnowledge{
+	margin: 0px 0px 0px 5px;
+}
+
+#modifiableStats {
+    transform: translateY(30px);
+    display: grid;
+    gap: 5px;
+    height: 50%;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    min-width: 33.33%;
+}
+
+
+#points {
+	font-size: 18px;
+  	color: #e5be31;
+}
+
+#otherButtons {
+  	transform: translateY(100px);
+	display: flex;
+  	gap: 15px;
+  	justify-content: center;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-tag name="splash1" color="orange"></tw-tag><tw-tag name="splash2" color="orange"></tw-tag><tw-tag name="splash3" color="orange"></tw-tag><tw-tag name="header" color="yellow"></tw-tag><tw-tag name="statsPage" color="yellow"></tw-tag><tw-tag name="mainMenuPage" color="yellow"></tw-tag><tw-tag name="statsLogic" color="orange"></tw-tag><tw-tag name="utils" color="orange"></tw-tag><tw-tag name="Story" color="blue"></tw-tag><tw-tag name="newChap" color="green"></tw-tag><tw-tag name="story" color="blue"></tw-tag><tw-passagedata pid="1" name="b4ch1p1" tags="newChap story" position="900,350" size="200,200">[(dialog: [Since we currently have no way of importing save data, please remember to set your stats], &quot;Understood.&quot;)](set: $v_ch11_saved_rose to (confirm: &quot;Did you save Rose during your playthrough?&quot;, &quot;No&quot;, &quot;Yes&quot;))&lt;!-- As a reminder of the current state of the story, the party is on their way to Galamir for a summit concerning the incoming war with Tyrath&#39;s forces, and to deliver the pinecone. The current party consists of Barry, Kate, Daren, Hadrik, Flower/Illuna, Akarra, Diane, and Leo the Leopard. Azarius, the sage of the west, has just saved the party by blackmailing Eiden with the threat of destroying his mysterious spells across the island, which are also set to be destroyed if Azarius himself dies.
 
 The God of time&#39;s second ritual should happen sometime in the near future (It happens at Galamir according to authorman&#39;s family, but obviously the party doesn’t know that), and it will teleport Melindra and Leila back to the rest of the party.
 
@@ -220,7 +279,7 @@ Azarius seems to really enjoy leading us on, because once again his face cracks 
 &quot;Let me explain.&quot;
 
 
-[[Continue-&gt;b4ch1p2]]</tw-passagedata><tw-passagedata pid="2" name="b4ch1p2" tags="" position="1100,350" size="100,200">&lt;!--Azarius tells his backstory, which largely paints him as incredibly prideful and ambitious, but not overtly evil in the same way a greedy noble is, more so just determined to usurp the gods in the same way as Barry with magic, or Brinhorn with defeating Azarius.
+[[Continue-&gt;b4ch1p2]]</tw-passagedata><tw-passagedata pid="2" name="b4ch1p2" tags="story" position="1200,350" size="100,200">&lt;!--Azarius tells his backstory, which largely paints him as incredibly prideful and ambitious, but not overtly evil in the same way a greedy noble is, more so just determined to usurp the gods in the same way as Barry with magic, or Brinhorn with defeating Azarius.
 
 The characters occasionally interrupt him to ask questions, which he answers. This may be done over the course of multiple continue selections, and/or dialogue changes that could be easily implemented, the way Magium typically does for long expository sections.
 
@@ -238,23 +297,25 @@ This next part isn&#39;t revealed to the party, but it allows the writer to have
 
 His trial with the god of time was simply reliving the moment he vowed to usurp the gods. He did his ritual correctly the first time. This memory was chosen due to the sheer intensity of his emotion during it, allowing him to supply an equivalent amount of energy to that of the sustained hatred of someone else&#39;s ritual.
 
---&gt; &quot;Growing up, I was a rather talented mage, even for a child. I say this, not out of arrogance, but simply for you to understand. Things came easy to me, and I didn&#39;t really struggle very much. 
+--&gt; &quot;Growing up, I was a rather talented mage, even for a child. I say this, not out of arrogance, but simply for you to understand. Things came easy to me, and I didn’t really struggle very much. In those early years, magic was like breathing. I didn’t have to think about it. Fire, light, little illusions; they all just… happened. I barely needed to try. And because of that, maybe I took it for granted. I thought everyone could do what I did, that everyone felt that rush, that spark. But I was young, and at the time, I didn’t realize just how different I was.
 
-Because of that, I loved to show off to my family. Frankly, they didn&#39;t seem all too interested in the fact that I could control fire, but I would go on and on about all kinds of things; I even tried to teach them some magic, but none of them ever got it.
+Because of that, I loved to show off to my family. It was all I knew to do with the gift I’d been given, and I thought they’d be just as amazed as I was. Frankly, they didn’t seem all that interested. I could make flames dance on my fingertips, create patterns of light with a flick of my wrist, but to them, it was just… noise. I would go on and on about all kinds of things I’d discovered; I even tried to teach them some magic, convinced they could learn it if they’d just try. But none of them ever got it. No matter what I did, I was the only one in the family who could touch it, who could feel that raw pulse of power.
 
-Their passion was more... spiritual. They were religious, and so invested in their congregation that they weren&#39;t going to waste their time with anything on this plane. //Much better to pray for our infinite afterlife//, they would always tell me. Funnily enough, although they always said that, I noticed they had a conveniently large amount of earthly money. I always thought those gods got too much praise for basically doing nothing to or for us in this world.
+Their passion was more… spiritual. They were religious, and so invested in their congregation that they weren’t going to waste time with anything on this plane. Much better to pray for our infinite afterlife, they would always tell me. They’d say it so casually, like it was the most obvious truth in the world, and I’d feel a strange resentment, like they were choosing something distant and untouchable over what was right in front of them. Funnily enough, though, despite all their talk about eternal life and otherworldly devotion, I noticed they had a conveniently large amount of earthly money. All that faith, all those rituals, but somehow, they never seemed to struggle with material things.
 
-Once I was of age, I left home. Since I was young, I&#39;d had this unfulfilled desire for more. There&#39;s so much more out there, and I just wanted to see it all. I wanted to //do// it all.&quot;
+I think, even then, I saw through it. I always thought those gods got too much praise for basically doing nothing for us in this world. It was easy to praise something invisible, something that never had to prove itself. I think that’s what bothered me the most. That my family had given their lives, their passion, to something that never had to earn it. But I… I wanted to earn it. Whatever it was I was meant for, I wanted to find it myself, to chase it, not wait for it to come to me.
 
-//Honestly, that sounds a lot like me. Well, the unexplainable desire for something, at least. Not so much the whole &#39;good with magic thing.&#39;//
+Once I was of age, I left home. The moment I could, I was gone. Since I was young, I’d had this unfulfilled desire for more. I can’t even explain where it came from — just this constant itch, this feeling that there was so much more out there. More power, more knowledge, more life. And I wanted to see it all, to feel it all. I wanted to do it all. I didn’t want to sit around waiting for a god to bless me; I wanted to carve my own path, to prove that I was more than just some prodigy in a village no one would remember.”
 
-Just as I finish forming that thought, Daren prods me and whispers, &quot;Sounds a little like someone I know, eh?&quot;
+//Honestly, that sounds a lot like me. Well, the unexplainable desire for something, at least. Not so much the whole ‘good with magic’ thing.//
+
+Just as I finish forming that thought, Daren leans over, smirking as he whispers, “Sounds a little like someone I know, eh?”
 
 
 [[Ask about his family-&gt;b4ch1p3.a]]
 [[Ask about where he went-&gt;b4ch1p3.b]]
 [[Joke about his desire-&gt;b4ch1p3.c]]
-[[Keep listening-&gt;b4ch1p3]]</tw-passagedata><tw-passagedata pid="3" name="b4ch1p3" tags="" position="1500,350" size="100,200">&lt;!--Azarius continues his backstory explanation, now finally reaching how he gained the sage title. 
+[[Keep listening-&gt;b4ch1p3]]</tw-passagedata><tw-passagedata pid="3" name="b4ch1p3" tags="story" position="1600,350" size="100,200">&lt;!--Azarius continues his backstory explanation, now finally reaching how he gained the sage title. 
 
 As he talks about Brinhorn, Barry realizes Azarius has some insight into a small detail of Brinhorn&#39;s life that Barry doesn&#39;t know.
 
@@ -280,19 +341,65 @@ His answer? It wasn&#39;t the title. It was defeating me, who he had put on this
 
 
 [[Ask Azarius about it-&gt;b4ch1p3.1]]
-[[Stay silent-&gt;b4ch1p4]]</tw-passagedata><tw-passagedata pid="4" name="b4ch1p3.1" tags="" position="1700,450" size="100,100">(set: $Azarius_Brinhorn_Conversation to 1) 
-
-The conversation goes on a brief tangent as Barry and Azarius talk about Brinhorn, whom Azarius holds as a close friend despite, or rather because of, their rivalry. The aside characterizes Brinhorn a bit more and confirms to the group that he is in the tournament, as Azarius mentions that he and Brinhorn exchange letters regularly and that their last contact was wishing each other luck in the tournament.
+[[Stay silent-&gt;b4ch1p4]]</tw-passagedata><tw-passagedata pid="4" name="b4ch1p3.1" tags="story" position="1800,450" size="100,100">&lt;!--The conversation goes on a brief tangent as Barry and Azarius talk about Brinhorn, whom Azarius holds as a close friend despite, or rather because of, their rivalry. The aside characterizes Brinhorn a bit more and confirms to the group that he is in the tournament, as Azarius mentions that he and Brinhorn exchange letters regularly and that their last contact was wishing each other luck in the tournament.
 
 As this information, both this slide and slide 4-3, may be important to dialogue options later in the book, setting a variable for whether or not this conversation occurred is advisable.
 
-[[continue-&gt;b4ch1p3.2]]</tw-passagedata><tw-passagedata pid="5" name="b4ch1p3.2" tags="" position="1900,450" size="100,100">Hadrick brags for Barry, telling Azarius that Barry was Brinhorn&#39;s apprentice for a time.
+--&gt; &quot;What was the mistake?&quot;
+
+Azarius looks at me for a moment, as if weighing the merits of a real response; then he exhales a long breath and nods a small, almost rueful smile.
+
+“Brinhorn’s mistake,” he says, voice lowering, “is that he holds back. Just a bit. Every time we fight, there’s this moment where he hesitates, right when he’s got the upper hand. I think he does it without even realizing. Deep down, he can’t bring himself to truly go all out against someone he… respects.” Azarius pauses, a strange light dancing in his eye. “Even if it costs him the fight.”
+
+I feel the weight settle over our circle as his words sink in. I can’t tell if Azarius is frustrated by it, or disappointed, or proud. 
+
+Kate begins to speak. “So… he could’ve beaten you. If he’d just gone all in?”
+
+Azarius&#39;s head tilts to the side, his lips curling into a very faint smile. “Perhaps. Or maybe he just likes the idea of trying more than the idea of winning. It’s part of why I respect him, too. Because for all his ambition, he doesn’t lose sight of what matters to him. It’s strange, though, having a rival like that… it’s almost as if he’s more of a friend than an enemy.”
+
+He hesitates, looks at me then towards the rest of the group, his expression weighing if he should go on. Finally, he gives a slight shrug to himself and goes on.
+
+“We haven’t just fought; we’ve shared things. After these many years of this dueling, he&#39;s one I know well. Perhaps better than anybody else. And even when we are not fighting, we maintain contact. We exchange letters from time to time. He started doing this since that first duel, in order to wish me luck, share stories of his wanderings. It wasn&#39;t different this time either, as he told me he was entering too.&quot;
+
+“Wait,” Daren cuts in. “You’re saying Brinhorn’s actually in this tournament?”
+
+Azarius nods, pride glinting within his eye. &quot;Yes. Honestly, I did not know for sure that he would, either, but once his letter came, I knew he was still determined, still pushing himself. It would seem even after so many years, he has not given up, and if we happen to meet during it, I do know that he&#39;ll still challenge me.&quot;
+
+Azarius lets out a low chuckle, shaking his head. &quot;He&#39;d probably laugh if he heard me say it. But in a world full of fleeting alliances and hollow flattery, Brinhorn has been… constant. He&#39;s someone I trust, even when we&#39;re trying to take each other down. I don&#39;t think I ever expected that.&quot;
+
+Kate gives me a sly look. “Guess you’d better watch out, Barry. Maybe someday you’ll find yourself writing sappy letters to Eiden.”
+
+With that, the whole group bursts out laughing. Azarius gives a good-natured smile, while Leo does not seem quite so amused at them joking about a man who had just nearly killed them. 
+
+
+[[Continue-&gt;b4ch1p3.2]]</tw-passagedata><tw-passagedata pid="5" name="b4ch1p3.2" tags="story" position="2000,450" size="100,100">&lt;!--Hadrick brags for Barry, telling Azarius that Barry was Brinhorn&#39;s apprentice for a time.
 
 Azarius, intrigued, asks more. As Barry speaks to him, Azarius seems to realize something. He informs Barry that Brinhorn still talks about him to this day, calling him his greatest apprentice, and saying that it was an absolute shame he left. 
 
 Azarius then congratulates Barry on managing to become a mage after all this time.
 
-[[continue-&gt;b4ch1p4]]</tw-passagedata><tw-passagedata pid="6" name="b4ch1p3.a" tags="" position="1300,275" size="100,100">&lt;!--Barry asks about some minor detail about the backstory that slightly expands upon Azarius as a character.
+--&gt; Hadrik grins suddenly, crossing his arms as he looks to Azarius with a trace of mischief in his eye. &quot;You know, Barry here actually apprenticed under Brinhorn for a while.&quot;
+
+Azarius&#39;s eyebrows rise and he looks at me with newfound interest. &quot;Is that so?&quot;
+
+I can feel my face start to flush under his gaze, and I mutter, “Yeah, for a bit, I guess. Didn’t exactly work out long-term. We did some fun stuff together, though.”
+
+&quot;You&#39;re not THAT Barry, are you?&quot; Azarius suddenly exclaims. &quot;There&#39;s so many Barrys on the Western Continent that I never thought for a second that it was you.&quot;
+
+Daren roars in laughter, caught by surprise by Azarius&#39;s statement. &quot;Once again, a victim of your average name!&quot;
+
+&quot;What do you mean, that Barry? Do you know about him?&quot; Illuna speaks up for the first time.
+
+&quot;Well, only as much as Brinhorn told me, I suppose. Said you were a genius, but that it was a damn shame that you weren&#39;t a mage. //Greatest apprentice,// he called you. He still talks about you when we get drinks together, you know?&quot;
+
+Azarius chuckles, his gaze warm but calculating, as if he’s appraising my worth for the first time. “You know, I think Brinhorn always hoped that somehow, you would prove everyone wrong. And here you stand before me, a mage in your own right. I think he would be proud, Barry. Even… envious.”
+
+I swallow, feeling the weight of their eyes on me, but I can’t help the smile tugging at my lips. “Well, maybe one of these days I’ll have to write him back. If I don&#39;t see him during the tournament. Let him know that… I did it.”
+
+&quot;That sounds like a good idea,&quot; He responds. &quot;I think he&#39;d really appreciate that. Brinhorn always thought it was an absolute shame that you left.&quot;
+
+
+[[Continue-&gt;b4ch1p4]]</tw-passagedata><tw-passagedata pid="6" name="b4ch1p3.a" tags="story" position="1400,275" size="100,100">&lt;!--Barry asks about some minor detail about the backstory that slightly expands upon Azarius as a character.
 
 Some back-and-forth dialogue between other characters ensues.
 
@@ -304,8 +411,9 @@ After that, it was all about Memphir. His symbol was carved into every nook and 
 
 &quot;A simple, yet noble life,&quot; Hadrik mutters.
 
+
 (display:&quot;b4ch1p3&quot;)
-(hidden:)[[Continue-&gt;b4ch1p3]]</tw-passagedata><tw-passagedata pid="7" name="b4ch1p3.b" tags="" position="1300,475" size="100,100">&lt;!-- Barry asks about some minor detail about the backstory that slightly expands upon the world building.
+(hidden:)[[Continue-&gt;b4ch1p3]]</tw-passagedata><tw-passagedata pid="7" name="b4ch1p3.b" tags="story" position="1400,475" size="100,100">&lt;!-- Barry asks about some minor detail about the backstory that slightly expands upon the world building.
 
 Some back-and-forth dialogue between other characters ensues. 
 
@@ -323,8 +431,9 @@ Daren quickly interjects. &quot;That&#39;s where my ex-sage master was from! The
 
 &quot;Really? A student of both Kalral and Nolderan? Interesting...&quot; Azarius raises an eyebrow, seemingly in thought. 
 
+
 (display:&quot;b4ch1p3&quot;)
-(hidden:)[[Continue-&gt;b4ch1p3]]</tw-passagedata><tw-passagedata pid="8" name="b4ch1p3.c" tags="" position="1300,625" size="100,100">&lt;!--Barry makes some smartass quip that ultimately leads to someone (probably Kate) scolding and or hitting Barry. 
+(hidden:)[[Continue-&gt;b4ch1p3]]</tw-passagedata><tw-passagedata pid="8" name="b4ch1p3.c" tags="story" position="1400,625" size="100,100">&lt;!--Barry makes some smartass quip that ultimately leads to someone (probably Kate) scolding and or hitting Barry. 
 
 Diane laughs at the exchange. 
 
@@ -338,8 +447,9 @@ Kate scowls. &quot;Can you just let him finish? We might learn something interes
 
 Diane, clearly still not used to the dynamics of the group yet, lets out a small giggle.
 
+
 (display:&quot;b4ch1p3&quot;)
-(hidden:)[[Continue-&gt;b4ch1p3]]</tw-passagedata><tw-passagedata pid="9" name="b4ch1p4" tags="" position="2100,350" size="200,200">The backstory reaches its conclusion. Akarra keeps chiming in throughout the last parts.
+(hidden:)[[Continue-&gt;b4ch1p3]]</tw-passagedata><tw-passagedata pid="9" name="b4ch1p4" tags="story" position="2200,350" size="200,200">&lt;!--The backstory reaches its conclusion. Akarra keeps chiming in throughout the last parts.
 
 The group members ask several questions, which Azarius answers. The most notable of these questions is asked by Illuna, who asks if his Henry knows about any of his backstory.
 
@@ -347,34 +457,122 @@ Azarius responds that he has never told Henry the full story, though he may have
 
 After a few questions from the others, Barry gets a chance to ask his own.
 
-[[Ask Azarius if he plans to join the groups training to kill the gods-&gt;b4ch1p5a]]
-[[Ask Azarius if he has any techniques that might prove useful against beings of near pure magic like Selkrim-&gt;b4ch1p5b]]
-[[Ask Azarius if he would be willing to talk about magical theories with him and Akarra while they travel together-&gt;b4ch1p5c]]
-[[Ask Azarius some completely asinine question that&#39;s clearly the joke question of the choices-&gt;b4ch1p5d]]
-[[Don&#39;t ask a question-&gt;b4ch1p5e]]</tw-passagedata><tw-passagedata pid="10" name="b4ch1p5a" tags="" position="2450,100" size="100,100">Azarius responds that he won&#39;t participate in their training directly, but is quite open about the fact that he will most certainly listen in and possibly talk with Akarra occasionally.
+--&gt; &quot;It was Brinhorn who helped me finally reach an understanding of what I really wanted. It wasn&#39;t the power that I so desired. I wanted that same fame and worship that all of the gods got. His dedication made me realize it.&quot;
 
-[[continue-&gt;b4ch1p6]]</tw-passagedata><tw-passagedata pid="11" name="b4ch1p5b" tags="" position="2450,250" size="100,100">Azarius responds that he might, but to confirm if they&#39;re actually useful he&#39;ll need to talk to someone knowledgeable on the subject like Akarra.
+He pauses, his gaze distant, as though he’s seeing a different time, a different self. “All that time, I had been chasing strength, testing myself, reaching for a power I thought could fill the emptiness I felt.
 
-[[continue-&gt;b4ch1p6]]</tw-passagedata><tw-passagedata pid="12" name="b4ch1p5c" tags="" position="2450,400" size="100,100">Azarius agrees and says that he was actually going to propose something quite similar himself.
+But Brinhorn, in his relentless pursuit of me, showed me something I hadn’t even considered, something I’d buried under ambition and pride. He dedicated himself to besting me, seeing me as something far above himself, and in that dedication, I saw the adoration I’d craved, reflected back at me.”
 
-[[continue-&gt;b4ch1p6]]</tw-passagedata><tw-passagedata pid="13" name="b4ch1p5d" tags="" position="2450,550" size="100,100">Azarius takes the joke in stride and laughs, before turning the joke around to make fun of Barry in some regard.
+Azarius gives a short, bitter laugh. “My family had for so long conflated love with power that it seeped into me too, like poison. They revered gods who held no stake in our lives, who offered nothing but empty promises of salvation. 
+
+I grew up thinking that power was love, that to be truly loved, I had to be powerful, be worshipped. I thought that if I could just become strong enough, if I could just rise high enough, then I would finally be worthy of the love that was withheld from me.”
+
+Arraka’s laughter cuts through his words, sharp and mocking. “So all of this… all of your grand ambition, it’s just you throwing a tantrum because your family didn’t love you enough? Ahahahaha!”
+
+Azarius’s face hardens, and his voice becomes cold. “Call it what you will, banshee. But are you any different, trying to take them down because of things that happened hundreds of years ago? 
+
+Unlike the gods, I have worked for my power, clawed my way to where I stand. It may have started as a way to fill a void, but it has become more than that. Much more.”
+
+lluna’s voice cuts in, calm but with a hint of curiosity. “Does Henry know any of this? About… why you want to challenge the gods, or even that you plan to?”
+
+Azarius’s features soften slightly at the mention of Henry. “No, I’ve never told him the full story. Henry’s a perceptive young man, though. He may have pieced together parts of it over time, especially as the tournament progressed. But I didn’t want to burden him with my past. My journey is my own, and Henry… he deserves to walk his own path without being weighed down by my mistakes.”
+
+
+[[Ask Azarius if he plans to join the groups training to kill the gods-&gt;b4ch1p5.a]]
+[[Ask Azarius if he has any techniques that might prove useful against beings of near pure magic like Selkrim-&gt;b4ch1p5.b]]
+[[Ask Azarius if he would be willing to talk about magical theories with him and Akarra while they travel together-&gt;b4ch1p5.c]]
+[[Ask Azarius if he could get along with the gods-&gt;b4ch1p5.d]]
+[[Stay silent-&gt;b4ch1p5.e]]</tw-passagedata><tw-passagedata pid="10" name="b4ch1p5.a" tags="story" position="2550,100" size="100,100">&lt;!--Azarius responds that he won&#39;t participate in their training directly, but is quite open about the fact that he will most certainly listen in and possibly talk with Akarra occasionally.
+--&gt;(if:$stats&#39;s magicalSense &gt;= 3)[(set: $text to &quot;As Azarius wraps up, there’s a flicker of something in his expression when he mentions wanting to talk to Akarra. It’s subtle — just the barest hint of a guarded look in his eyes, like there’s something he’s not saying. Something important.
+
+I feel my curiosity flare up, and a small knot of suspicion tightens in my gut. Whatever it is, Azarius is playing it close to the chest. But I know better than to press him on it, at least not here and now, with everyone watching.
+
+&quot;)(text-colour:#74b816)[Magical sense check successful - level 3]](else:)[(text-colour:#f03e3e)[Magical sense check failed - level 3]]
+&quot;Do you plan on joining our group’s training to kill the gods?&quot;
+
+Azarius gives a half-smile, clearly entertained by the notion. “I won’t be participating directly, no. But I will most certainly be listening in. And if Akarra happens to engage in any, let’s say, insightful discussions, I might add a thought or two.”
+
+(if:$text is not 0)[(print:$text)] (display:&quot;b4ch1p5&quot;)
+(hidden:)[[Continue-&gt;b4ch1p5]]</tw-passagedata><tw-passagedata pid="11" name="b4ch1p5.b" tags="story" position="2550,250" size="100,100">&lt;!--Azarius responds that he might, but to confirm if they&#39;re actually useful he&#39;ll need to talk to someone knowledgeable on the subject like Akarra.
+--&gt;(if:$stats&#39;s magicalSense &gt;= 3)[(set: $text to &quot;As Azarius wraps up, there’s a flicker of something in his expression when he mentions wanting to talk to Akarra. It’s subtle — just the barest hint of a guarded look in his eyes, like there’s something he’s not saying. Something important.
+
+I feel my curiosity flare up, and a small knot of suspicion tightens in my gut. Whatever it is, Azarius is playing it close to the chest. But I know better than to press him on it, at least not here and now, with everyone watching.
+
+&quot;)(text-colour:#74b816)[Magical sense check successful - level 3]](else:)[(text-colour:#f03e3e)[Magical sense check failed - level 3]]
+&quot;Do you have any techniques that might work against beings of pure magic, like Selkrim?&quot;
+
+Azarius’s expression shifts, as if considering it seriously. “Perhaps. But to confirm whether they’d be effective, I’d need to speak with someone well-versed in that area, like Akarra. I’ll see what I can share once I’ve reviewed a few… possibilities.”
+
+(if:$text is not 0)[(print:$text)] (display:&quot;b4ch1p5&quot;)
+(hidden:)[[Continue-&gt;b4ch1p5]]</tw-passagedata><tw-passagedata pid="12" name="b4ch1p5.c" tags="story" position="2550,400" size="100,100">&lt;!--Azarius agrees and says that he was actually going to propose something quite similar himself.
+--&gt;(if:$stats&#39;s magicalSense &gt;= 3)[(set: $text to &quot;As Azarius wraps up, there’s a flicker of something in his expression when he mentions wanting to talk to Akarra. It’s subtle — just the barest hint of a guarded look in his eyes, like there’s something he’s not saying. Something important.
+
+I feel my curiosity flare up, and a small knot of suspicion tightens in my gut. Whatever it is, Azarius is playing it close to the chest. But I know better than to press him on it, at least not here and now, with everyone watching.
+
+&quot;)(text-colour:#74b816)[Magical sense check successful - level 3]](else:)[(text-colour:#f03e3e)[Magical sense check failed - level 3]]
+&quot;Would you be willing to talk about magical theories with me and Akarra while we travel together?&quot;
+
+Azarius nods, an approving look in his eye. “In fact, I was going to suggest something similar myself. Our combined insights may uncover something valuable, and I suspect there’s much we can learn from each other.”
+
+(if:$text is not 0)[(print:$text)] (display:&quot;b4ch1p5&quot;)
+(hidden:)[[Continue-&gt;b4ch1p5]]</tw-passagedata><tw-passagedata pid="13" name="b4ch1p5.d" tags="story" position="2550,550" size="100,100">&lt;!--Azarius takes the joke in stride and laughs, before turning the joke around to make fun of Barry in some regard.
 
 Afterwards he suggests that he and Akarra exchange magical knowledge, as it may be useful to both groups.
+--&gt;(if:$stats&#39;s magicalSense &gt;= 3)[(set: $text to &quot;As Azarius wraps up, there’s a flicker of something in his expression when he mentions wanting to talk to Akarra. It’s subtle — just the barest hint of a guarded look in his eyes, like there’s something he’s not saying. Something important.
 
-[[continue-&gt;b4ch1p6]]</tw-passagedata><tw-passagedata pid="14" name="b4ch1p5e" tags="" position="2450,700" size="100,100">Once the questions die down, Azarius suggests that he and Akarra exchange magical knowledge, as it may be useful to both groups.
+I feel my curiosity flare up, and a small knot of suspicion tightens in my gut. Whatever it is, Azarius is playing it close to the chest. But I know better than to press him on it, at least not here and now, with everyone watching.
 
-[[continue-&gt;b4ch1p6]]</tw-passagedata><tw-passagedata pid="15" name="b4ch1p6" tags="" position="2700,350" size="100,200">(if:$Magic_Sense &gt;= 3)[Barry can sense that there&#39;s some Azarius is hiding in his statements about wanting to talk to Akarra, and decides it would be best to keep it to himself for now, and try to covertly tell the others/listen in on the conversation later.
+&quot;)(text-colour:#74b816)[Magical sense check successful - level 3]](else:)[(text-colour:#f03e3e)[Magical sense check failed - level 3]]
+&quot;So, Azarius, do you think if you met a god, you’d actually get along? Or would it just be endless arguing over who’s the ‘real’ one?&quot;
 
-The check is sense 3 because Azarius can conceal his aura well but doesn&#39;t know the advanced technique that Diane and the King of the Underground do.]
+Azarius chuckles, shaking his head. “Something tells me we’d find ourselves in a bit of a… philosophical disagreement. Besides, I’m quite certain I’d grow tired of their company long before they did mine.”
 
-Azarius says that he&#39;s glad to finally be able to talk about his ambitions with someone other than Brinhorn, and then asks the party to not mention any of this to Henry when he shows up.
+After the questions die down, Azarius suggests to Akarra, “Perhaps we should formally exchange magical knowledge. It could benefit both our groups — and besides, I have a feeling some of you would enjoy the discourse.”
+
+(if:$text is not 0)[(print:$text)] (display:&quot;b4ch1p5&quot;)
+(hidden:)[[Continue-&gt;b4ch1p5]]</tw-passagedata><tw-passagedata pid="14" name="b4ch1p5.e" tags="story" position="2550,700" size="100,100">&lt;!--Once the questions die down, Azarius suggests that he and Akarra exchange magical knowledge, as it may be useful to both groups.
+--&gt;(if:$stats&#39;s magicalSense &gt;= 3)[(set: $text to &quot;As Azarius wraps up, there’s a flicker of something in his expression when he mentions wanting to talk to Akarra. It’s subtle — just the barest hint of a guarded look in his eyes, like there’s something he’s not saying. Something important.
+
+I feel my curiosity flare up, and a small knot of suspicion tightens in my gut. Whatever it is, Azarius is playing it close to the chest. But I know better than to press him on it, at least not here and now, with everyone watching.
+
+&quot;)(text-colour:#74b816)[Magical sense check successful - level 3]](else:)[(text-colour:#f03e3e)[Magical sense check failed - level 3]]
+After the questions die down, Azarius suggests to Akarra, “Perhaps we should formally exchange magical knowledge. It could benefit both our groups — and besides, I have a feeling some of you would enjoy the discourse.”
+
+(if:$text is not 0)[(print:$text)] (display:&quot;b4ch1p5&quot;)
+(hidden:)[[Continue-&gt;b4ch1p5]]</tw-passagedata><tw-passagedata pid="15" name="b4ch1p5" tags="story" position="2800,350" size="100,200">&lt;!--Azarius says that he&#39;s glad to finally be able to talk about his ambitions with someone other than Brinhorn, and then asks the party to not mention any of this to Henry when he shows up.
 
 After a few more minutes of waiting and talking, Henry finally shows up. Azarius informs him that the two groups will be traveling together on their way to Galamir. The entire interaction Henry is very flustered.
 
-(if: $v_ch11_saved_rose is 1)[Near the end of the interaction with Henry, rose calls the group for one of their normal conversations. The group tells her that a lot has happened and they&#39;ll explain later. Rose hears Henry talking with the group and recognizes his voice, and starts talking with him (The Transceiver is on speaker as she usually is talking with the group as a whole). Henry is clearly a little embarrassed and flattered that someone bothered to remember him when he travels with Azarius.
-]
+(if: $v_ch11_saved_rose is true)[Near the end of the interaction with Henry, rose calls the group for one of their normal conversations. The group tells her that a lot has happened and they&#39;ll explain later. Rose hears Henry talking with the group and recognizes his voice, and starts talking with him (The Transceiver is on speaker as she usually is talking with the group as a whole). Henry is clearly a little embarrassed and flattered that someone bothered to remember him when he travels with Azarius.]
 
-[[continue-&gt;b4ch1p7]]</tw-passagedata><tw-passagedata pid="16" name="b4ch1p7" tags="" position="2900,350" size="200,200">Once the conversations die down the group begins to travel towards Galamir as there is still time left in the day and they want to be away from the site of their battle.
+--&gt;With a soft, resigned sigh, the relief hardly escapes Azarius&#39;s face: &quot;I must confess, it is nice to finally be able to speak with someone besides Brinhorn about my intentions. For so long, it’s felt like a burden I’ve carried alone. And now… well, I’d ask that you keep this between us. When Henry comes, say nothing to him about this.”
+
+The group nods in agreement, exchanging a few curious glances. I catch Kate’s eye, and there’s a spark of understanding there. She, too, seems to sense that there’s more going on beneath the surface than Azarius is letting on. But we stay quiet, respecting his request, for now.
+
+A few more minutes elapse while we continue talking, lighter now that this particular tension is relieved, given that Azarius has shared this part of himself with us. Finally, Henry comes into view, topping the rise as he hurries toward us, flustered and his eyes darting about as if he felt he&#39;s missed something important.
+
+Azarius meets him with a calm nod, gesturing toward the group. “Henry, we’ll be traveling with these fine people on our way to Galamir.”
+
+Henry blinks, his face flushing as he takes us all in. “Oh, uh — right. Together, then. That’s… that’s good. I mean, it’s probably safer that way.”
+
+It’s almost amusing to see the contrast between Azarius’s composed demeanor and Henry’s obvious nervousness when around his master, especially with the group watching him so closely. 
+
+(if: $v_ch11_saved_rose is true)[Near the end of our conversation, the transceiver crackles to life, Rose’s familiar voice filling the air. “Hey, everyone! Thought I’d check in. How’s it going?”
+
+There’s a beat of silence as we all share a look, clearly not sure where to begin.
+
+“Uh… a lot’s happened,” Daren says, shooting a quick glance at Azarius. “We’ll have to fill you in later, Rose.”
+
+As they talk, Rose suddenly hears Henry’s voice through the speaker. She pauses, clearly taken aback. “Wait… Henry? Is that you?”
+
+Henry’s face flushes even more, and he stammers, looking at Azarius and then back at the transceiver, caught off guard. “Oh, uh, yes. That’s… that’s me. Hello, Rose.”
+
+Her voice brightens, clearly delighted. “Wow, you’re with the group? I didn’t expect to hear from you again! Good to know you’re doing well.”
+
+Henry’s face lights up, a bit flustered but clearly flattered. “Thank you. I… I didn’t realize anyone would remember me.” He glances shyly at the transceiver, and I catch the tiniest hint of a smile.]
+
+
+[[Continue-&gt;b4ch1p6]]</tw-passagedata><tw-passagedata pid="16" name="b4ch1p6" tags="story" position="3000,350" size="200,200">&lt;!--Once the conversations die down the group begins to travel towards Galamir as there is still time left in the day and they want to be away from the site of their battle.
 
 While on the road the party wonders what Galamir is like, and Diane tries her best to answer with what little she knows about the city. In short all she knows is that the city has fallen into some hard times and that some of the other kings even view the measures in place as too strict and authoritarian, though she doesn&#39;t know the specifics.
 
@@ -386,14 +584,45 @@ Note: Throughout I only outlined what I considered major dialogue choices. There
 
 I know this outline is very linear, but I believe it for the best that chapter 4 starts linearly so that it has proper buildup before it branches out. I also believe that if this turns out to be too short in a realistic scenario, basically everything could be expanded upon, and if need be we could simply also include the Talmak fight to have an action set piece (though I am of the belief that should be the following chapter, as I&#39;ve noticed when writing that outlines have a way of ballooning to be larger than intended.)
 
-It&#39;s also worth noting that we aren&#39;t limited to doing 11/12 chapters. There&#39;s nothing saying we can&#39;t have a 13/14 chapter long book if need be for pacing reasons.</tw-passagedata><tw-passagedata pid="17" name="header" tags="header" position="300,400" size="200,100">(enchant: ?link, (t8n-arrive: &quot;instant&quot;))[&lt;div id=&quot;header&quot;&gt;
+It&#39;s also worth noting that we aren&#39;t limited to doing 11/12 chapters. There&#39;s nothing saying we can&#39;t have a 13/14 chapter long book if need be for pacing reasons.
+
+--&gt;The last murmur of conversation fades as each one of us finds a rhythm, pacing down the road towards Galamir.The lingering tension from the battle site drives us forward; no one’s keen on staying too close to where we last faced Eiden, and there’s still enough light left to make some decent progress.
+
+As we walk, Kate broaches the question in all of our minds. &quot;So… what&#39;s Galamir like, anyway? I&#39;ve heard bits and pieces, but nothing concrete.
+
+Diane furrows her brow, actually trying to remember what she&#39;s heard: &quot;Well… I really don&#39;t know much, but what I gathered, Galamir has seen better days. Once a very flourishing place, a real hub of trade and culture, recently the times have changed. The city started falling upon hard times, and… well, the word on the street is that the measures they&#39;ve taken to &#39;restore order&#39; have been quite extreme.&quot;.
+
+She pauses, as if carefully choosing her words. “Some of the other kings don’t approve of it, actually. They say the new laws are too strict, even authoritarian. But I don’t know the specifics.”
+
+There’s a murmur of uncertainty among us as we process this. A city on the edge, held together by rules that even kings consider too harsh…
+
+Before we can dwell on it too much, a prickle of awareness runs through the group. I can feel it, like a shift in the air, and I’m not the only one that’s noticed. Daren pauses, his hand instinctively drifting toward his sword, and Hadrik narrows his eyes at the path ahead.
+
+“Someone’s coming,” Illuna says quietly, her gaze fixed on the distant figures growing larger on the horizon.
+
+The outlines soon assume more recognizable shapes; a ripple of recognition runs over the group. It is Talmak&#39;s party, pushing towards us at a steady, unwearied gait.
+
+---
+
+This is the end of the chapter, folks! I certainly feel like I wish I could&#39;ve done more, but between my time at CERN and uni stuff, it&#39;s been pretty tough. Hopefully the writing is decent enough though :)
+
+Thanks to @rinest for organizing this and @whatevercomic07 for providing the outline - it was a great experience to write out when it was so nicely drafted. From now, my primary focus will probably be getting more solid logic and seeing if it&#39;d be plausible to shift to sugarcube instead of harlowe.
+
+I&#39;d like to take a moment and remind everybody that this is simply a small attempt at continuing Cristian&#39;s work - without him, we wouldn&#39;t be here right now. His family has posted a lot of memorial things about him on the reddit, and I urge you, if you haven&#39;t already, to watch and read all they have sent. Let’s all keep Cristian in our hearts as we continue exploring the world he gifted us, remembering him not just for his incredible work, but for the person he was.
+
+Thank you, Cristian. This journey is for you. Mahad Selak, Mahad Maktar.
+
+- Br3nnabee</tw-passagedata><tw-passagedata pid="17" name="header" tags="header" position="250,400" size="200,100">(enchant: ?link, (t8n-arrive: &quot;instant&quot;))[&lt;div id=&quot;header&quot;&gt;
     |mainmenu&gt;[(color: white)[[[MAIN MENU-&gt;mainMenuPage]]]]
     &lt;div id=&quot;book-and-chapter&quot;&gt;
       &lt;div id=&quot;book&quot; style=&quot;font-size: 12px;&quot;&gt;[(color: white)[BOOK 4]]&lt;/div&gt;
       &lt;div id=&quot;chapter&quot; style=&quot;display: inline-block;&quot;&gt;[(color: white)[CHAPTER 1]]&lt;/div&gt;
     &lt;/div&gt;
     |stats&gt;[(color: white)[[[STATS-&gt;statsPage]]]]
-&lt;/div&gt;]</tw-passagedata><tw-passagedata pid="18" name="mainMenuPage" tags="mainMenuPage" position="300,550" size="200,100">(link-goto: &quot;Start Game&quot;, &quot;b4ch1p1&quot;)</tw-passagedata><tw-passagedata pid="19" name="splash1" tags="splash1 noHeader" position="100,250" size="100,100">&lt;!-- Credit To @aenimus_nightshade for the splash screen code --&gt;
+&lt;/div&gt;]</tw-passagedata><tw-passagedata pid="18" name="mainMenuPage" tags="mainMenuPage noHeader" position="250,550" size="200,100">(text-style:&quot;bold&quot;)[(align:&quot;=&gt;&lt;=&quot;)[MAGIUM: RECRYSTALLIZED]]
+
+
+(link-goto: &quot;Start Game&quot;, &quot;b4ch1p1&quot;)</tw-passagedata><tw-passagedata pid="19" name="splash1" tags="splash1 noHeader" position="100,250" size="100,100">&lt;!-- Credit To @aenimus_nightshade for the splash screen code --&gt;
 (live: 1s)[(goto: &quot;splash2&quot;)]
 (change: ?Passage, via (t8n: &quot;dissolve&quot;))
 
@@ -404,225 +633,241 @@ It&#39;s also worth noting that we aren&#39;t limited to doing 11/12 chapters. T
 
 &lt;img id=&quot;splashimg&quot; src=&quot;https://i.ibb.co/RYxLwtD/Pv-QPYU9ky-SDh-Bcqp-3-cc-YPHu1-X3n-MHsxn41n-GXcu-Gnh-Z1-Z6-RA6-Dn-Cc-Quto-Jrit-RQ-1212588325.png&quot;&gt;</tw-passagedata><tw-passagedata pid="21" name="splash3" tags="splash3 noHeader" position="100,550" size="100,100">(live: 1s)[(goto: &quot;mainMenuPage&quot;)]
 (change: ?Passage, via (t8n: &quot;dissolve&quot;))
-(live:0.9s)[(dialog: [PREFACE: This is an alpha version of an entry for Challenge #2 in the community continuation of Magium. The name, code, content, and UI presented here reflect only a personal interpretation of the material provided by Authorman, his family, and an outline contributed by @whatevercomic07. While some aspects of this content may potentially become part of the approved canon, they are not currently representative of the entire community&#39;s work or opinions. Please be mindful of potential spoilers.
+(live:0.9s)[(dialog: [PREFACE: This is an alpha version of an entry for Challenge #2 in the community continuation of Magium. It is highly unfinished and many parts of the logic and UI remain to be done.
+
+The name, code, content, and UI presented here reflect only a personal interpretation of the material provided by Cristian Mihailescu, his family, and an outline contributed by @whatevercomic07. While some aspects of this content may potentially become part of the approved canon, they are not currently representative of the entire community&#39;s work or opinions. Please be mindful of potential spoilers.
 
 – Br3nnabee], &quot;Understood.&quot;)]
 
-&lt;img id=&quot;splashbg&quot; src=&quot;&quot; style=&quot;position: fixed; top: 50%; left: 0; transform: translateY(-50%); width: 100%; height: auto; z-index: 999;&quot;&gt;</tw-passagedata><tw-passagedata pid="22" name="statsPage" tags="statsPage noHeader" position="300,250" size="200,100">&lt;!-- Thanks to @somnium_proxy and @hituro on the twine discord for helping me iron out the kinks &lt;3 --&gt;
+&lt;img id=&quot;splashbg&quot; src=&quot;&quot; style=&quot;position: fixed; top: 50%; left: 0; transform: translateY(-50%); width: 100%; height: auto; z-index: 999;&quot;&gt;</tw-passagedata><tw-passagedata pid="22" name="statsPage" tags="statsPage noHeader" position="250,250" size="200,100">&lt;!-- Thanks to @somnium_proxy and @hituro on the twine discord for helping me iron out the kinks &lt;3 --&gt;
 
 [(put: $stats into _tempStats)
-(if: _tempStats is $stats)[(set: $gameButtonText to &quot;Return to game&quot;)](else:)[(set: $gameButtonText to &quot;Confirm Changes&quot;)]&lt;gameButtonText|
 
 &lt;div id=&quot;stats&quot;&gt;
-	
+	&lt;div id=&quot;statsText&quot;&gt;
+    [STATS]
+    &lt;/div&gt;
+    
+    &lt;div id=&quot;magicalDisplays&quot;&gt;
+      &lt;div id=&quot;magicalPower&quot;&gt;
+          [Magical Power: (str:_tempStats&#39;s magicalPower)]&lt;magicalPowerDisplay|
+      &lt;/div&gt;
+
+      &lt;div id=&quot;magicalKnowledge&quot;&gt;
+          [Magical Knowledge: (str:_tempStats&#39;s magicalKnowledge)]&lt;magicalKnowledgeDisplay|
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
     &lt;div id=&quot;points&quot;&gt;
     	[Available points: (str:_tempStats&#39;s points)]&lt;pointsDisplay|
     &lt;/div&gt;
     
-    &lt;div id=&quot;strength&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Strength: &quot; + (str:_tempStats&#39;s strength) + &quot;/4&quot;)
-        	[(if: _tempStats&#39;s points &gt; 0)[
-            	(if: _tempStats&#39;s strength &lt; 4)[
-                	(set:_tempStats&#39;s strength to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?strengthDisplay)
-                    (rerun:?pointsDisplay)
-                    (rerun:?gameButtonText)
-                    (rerun:?gameButton)
+    &lt;div id=&quot;modifiableStats&quot;&gt;
+        &lt;div id=&quot;strength&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Strength: &quot; + (str:_tempStats&#39;s strength) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s strength &lt; 4)[
+                        (set:_tempStats&#39;s strength to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?strengthDisplay)
+                        (rerun:?pointsDisplay)
+                        (rerun:?gameButtonText)
+                        (rerun:?gameButton)
+                        ]
                     ]
                 ]
-            ]
-        ]&lt;strengthDisplay|
+            ]&lt;strengthDisplay|
+        &lt;/div&gt;
+
+        &lt;div id=&quot;speed&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Speed: &quot; + (str:_tempStats&#39;s speed) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s speed &lt; 4)[
+                        (set:_tempStats&#39;s speed to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?speedDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;speedDisplay|
+        &lt;/div&gt;
+
+        &lt;div id=&quot;toughness&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Toughness: &quot; + (str:_tempStats&#39;s toughness) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s toughness &lt; 4)[
+                        (set:_tempStats&#39;s toughness to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?toughnessDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;toughnessDisplay|
+        &lt;/div&gt;
+
+        &lt;div id=&quot;reflexes&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Reflexes: &quot; + (str:_tempStats&#39;s reflexes) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s reflexes &lt; 4)[
+                        (set:_tempStats&#39;s reflexes to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?reflexesDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;reflexesDisplay|
+        &lt;/div&gt;
+
+        &lt;div id=&quot;hearing&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Hearing: &quot; + (str:_tempStats&#39;s hearing) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s hearing &lt; 4)[
+                        (set:_tempStats&#39;s hearing to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?hearingDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;hearingDisplay|
+        &lt;/div&gt;
+
+        &lt;div id=&quot;observation&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Observation: &quot; + (str:_tempStats&#39;s observation) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s observation &lt; 4)[
+                        (set:_tempStats&#39;s observation to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?observationDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;observationDisplay|
+        &lt;/div&gt;
+
+
+        &lt;div id=&quot;premonition&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Premonition: &quot; + (str:_tempStats&#39;s premonition) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s premonition &lt; 4)[
+                        (set:_tempStats&#39;s premonition to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?premonitionDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;premonitionDisplay|
+        &lt;/div&gt;
+        
+        &lt;div id=&quot;combatTechnique&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Combat Technique: &quot; + (str:_tempStats&#39;s combatTechnique) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s combatTechnique &lt; 4)[
+                        (set:_tempStats&#39;s combatTechnique to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?combatTechniqueDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;combatTechniqueDisplay|
+        &lt;/div&gt;
+
+        &lt;div id=&quot;ancientLanguages&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Ancient Languages: &quot; + (str:_tempStats&#39;s ancientLanguages) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s ancientLanguages &lt; 4)[
+                        (set:_tempStats&#39;s ancientLanguages to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?ancientLanguagesDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;ancientLanguagesDisplay|
+        &lt;/div&gt;
+
+        &lt;div id=&quot;bluff&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Bluff: &quot; + (str:_tempStats&#39;s bluff) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s bluff &lt; 4)[
+                        (set:_tempStats&#39;s bluff to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?bluffDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;bluffDisplay|
+        &lt;/div&gt;
+
+        &lt;div id=&quot;magicalSense&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Magical Sense: &quot; + (str:_tempStats&#39;s magicalSense) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s magicalSense &lt; 4)[
+                        (set:_tempStats&#39;s magicalSense to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?magicalSenseDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;magicalSenseDisplay|
+        &lt;/div&gt;
+
+        &lt;div id=&quot;auraHardening&quot; class=&quot;modifiableStat&quot;&gt;
+            [(link-rerun: &quot;Aura Hardening: &quot; + (str:_tempStats&#39;s auraHardening) + &quot;/4&quot;)
+                [(if: _tempStats&#39;s points &gt; 0)[
+                    (if: _tempStats&#39;s auraHardening &lt; 4)[
+                        (set:_tempStats&#39;s auraHardening to it + 1)
+                        (set:_tempStats&#39;s points to it - 1))
+                        (rerun:?auraHardeningDisplay)
+                        (rerun:?pointsDisplay)
+                        ]
+                    ]
+                ]
+            ]&lt;auraHardeningDisplay|
+        &lt;/div&gt;
     &lt;/div&gt;
     
-    &lt;div id=&quot;speed&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Speed: &quot; + (str:_tempStats&#39;s speed) + &quot;/4&quot;)
-        	[(if: _tempStats&#39;s points &gt; 0)[
-            	(if: _tempStats&#39;s speed &lt; 4)[
-                	(set:_tempStats&#39;s speed to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?speedDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;speedDisplay|
-    &lt;/div&gt;
-    
-    &lt;div id=&quot;toughness&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Toughness: &quot; + (str:_tempStats&#39;s toughness) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s toughness &lt; 4)[
-                    (set:_tempStats&#39;s toughness to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?toughnessDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;toughnessDisplay|
+    &lt;div id=&quot;otherButtons&quot;&gt;
+    	&lt;div id=&quot;cancelButton&quot;&gt;
+      		[(link-rerun: &quot;Cancel Changes&quot;)
+              [
+              (put: $stats into _tempStats)
+              (rerun:?strengthDisplay)
+              (rerun:?speedDisplay)
+              (rerun:?toughnessDisplay)
+              (rerun:?reflexesDisplay)
+              (rerun:?hearingDisplay)
+              (rerun:?observationDisplay)
+              (rerun:?ancientLanguagesDisplay)
+              (rerun:?combatTechniqueDisplay)
+              (rerun:?premonitionDisplay)
+              (rerun:?bluffDisplay)
+              (rerun:?magicalSenseDisplay)
+              (rerun:?auraHardeningDisplay)
+              (rerun:?pointsDisplay)
+              ]
+          ]&lt;cancelButton|
     &lt;/div&gt;
 
-    &lt;div id=&quot;reflexes&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Reflexes: &quot; + (str:_tempStats&#39;s reflexes) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s reflexes &lt; 4)[
-                    (set:_tempStats&#39;s reflexes to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?reflexesDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;reflexesDisplay|
-    &lt;/div&gt;
-
-    &lt;div id=&quot;hearing&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Hearing: &quot; + (str:_tempStats&#39;s hearing) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s hearing &lt; 4)[
-                    (set:_tempStats&#39;s hearing to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?hearingDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;hearingDisplay|
-    &lt;/div&gt;
-
-    &lt;div id=&quot;observation&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Observation: &quot; + (str:_tempStats&#39;s observation) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s observation &lt; 4)[
-                    (set:_tempStats&#39;s observation to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?observationDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;observationDisplay|
-    &lt;/div&gt;
-
-    &lt;div id=&quot;ancientLanguages&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Ancient Languages: &quot; + (str:_tempStats&#39;s ancientLanguages) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s ancientLanguages &lt; 4)[
-                    (set:_tempStats&#39;s ancientLanguages to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?ancientLanguagesDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;ancientLanguagesDisplay|
-    &lt;/div&gt;
-
-    &lt;div id=&quot;combatTechnique&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Combat Technique: &quot; + (str:_tempStats&#39;s combatTechnique) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s combatTechnique &lt; 4)[
-                    (set:_tempStats&#39;s combatTechnique to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?combatTechniqueDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;combatTechniqueDisplay|
-    &lt;/div&gt;
-
-    &lt;div id=&quot;premonition&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Premonition: &quot; + (str:_tempStats&#39;s premonition) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s premonition &lt; 4)[
-                    (set:_tempStats&#39;s premonition to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?premonitionDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;premonitionDisplay|
-    &lt;/div&gt;
-
-    &lt;div id=&quot;bluff&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Bluff: &quot; + (str:_tempStats&#39;s bluff) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s bluff &lt; 4)[
-                    (set:_tempStats&#39;s bluff to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?bluffDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;bluffDisplay|
-    &lt;/div&gt;
-
-    &lt;div id=&quot;magicalSense&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Magical Sense: &quot; + (str:_tempStats&#39;s magicalSense) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s magicalSense &lt; 4)[
-                    (set:_tempStats&#39;s magicalSense to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?magicalSenseDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;magicalSenseDisplay|
-    &lt;/div&gt;
-
-    &lt;div id=&quot;auraHardening&quot; class=&quot;modifiableStat&quot;&gt;
-        [(link-rerun: &quot;Aura Hardening: &quot; + (str:_tempStats&#39;s auraHardening) + &quot;/4&quot;)
-            [(if: _tempStats&#39;s points &gt; 0)[
-                (if: _tempStats&#39;s auraHardening &lt; 4)[
-                    (set:_tempStats&#39;s auraHardening to it + 1)
-                    (set:_tempStats&#39;s points to it - 1))
-                    (rerun:?auraHardeningDisplay)
-                    (rerun:?pointsDisplay)
-                    ]
-                ]
-            ]
-        ]&lt;auraHardeningDisplay|
-    &lt;/div&gt;
-    
-    &lt;div id=&quot;magicalPower&quot;&gt;
-    	[Magical Power: (str:_tempStats&#39;s magicalPower)]&lt;magicalPowerDisplay|
-    &lt;/div&gt;
-    
-    &lt;div id=&quot;magicalKnowledge&quot;&gt;
-    	[Magical Knowledge: (str:_tempStats&#39;s magicalKnowledge)]&lt;magicalKnowledgeDisplay|
-    &lt;/div&gt;
-    
-    &lt;div id=&quot;cancelButton&quot;&gt;
-    [(link-rerun: &quot;Cancel Changes&quot;)
-            [
-            (put: $stats into _tempStats)
-            (rerun:?strengthDisplay)
-            (rerun:?speedDisplay)
-            (rerun:?toughnessDisplay)
-            (rerun:?reflexesDisplay)
-            (rerun:?hearingDisplay)
-            (rerun:?observationDisplay)
-            (rerun:?ancientLanguagesDisplay)
-            (rerun:?combatTechniqueDisplay)
-            (rerun:?premonitionDisplay)
-            (rerun:?bluffDisplay)
-            (rerun:?magicalSenseDisplay)
-            (rerun:?auraHardeningDisplay)
-            (rerun:?pointsDisplay)
-            ]
-        ]&lt;cancelButton|
+    &lt;div id=&quot;returnButton&quot;&gt;
+    [(link-rerun: &quot;Save &amp; Return&quot;)
+      [
+          (put: _tempStats into $stats)
+          (go-to:(history:)&#39;s last)
+          ]
+      ]&lt;returnButton|
+      &lt;/div&gt;
   &lt;/div&gt;
-  
-  &lt;div id=&quot;gameButton&quot;&gt;
-  [(click-rerun:$gameButtonText)[Hi yis]]&lt;gameButton|
-  &lt;/div&gt;
-&lt;/div&gt;]
-</tw-passagedata><tw-passagedata pid="23" name="utils" tags="utils startup" position="200,100" size="200,100">{=
+
+&lt;/div&gt;]</tw-passagedata><tw-passagedata pid="23" name="utils" tags="utils startup" position="500,350" size="100,200">{=
 (set: $freshStats to (macro: [(set: $stats to (dm:
 	&quot;points&quot;, 33,
     &quot;strength&quot;, 0,
@@ -641,7 +886,8 @@ It&#39;s also worth noting that we aren&#39;t limited to doing 11/12 chapters. T
     &quot;magicalKnowledge&quot;, 1
 ))(out:)[]]))
 
-($freshStats:)</tw-passagedata></tw-storydata>
+($freshStats:)
+(go-to:&quot;splash1&quot;)</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
