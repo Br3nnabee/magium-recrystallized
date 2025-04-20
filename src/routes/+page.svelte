@@ -1,5 +1,6 @@
 <script lang="ts">
   import { writable } from "svelte/store";
+  import { base } from "$app/paths";
 
   // Scroll store
   const scrollY = writable(0);
@@ -138,7 +139,7 @@
         <circle cx="750" cy="550" r="20" fill="#D69E2E" />
       </svg>
       <img
-        src="/logo-red.png"
+        src="{base}/logo-red.png"
         alt="Game Logo"
         class="absolute aspect-square w-[max(30vw,75vh)] opacity-30 drop-shadow-2xl"
       />
@@ -156,7 +157,7 @@
       class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 mt-8 z-10"
     >
       <a
-        href="/play"
+        href="{base}/play"
         class="inline-block px-8 py-3 font-semibold bg-[#D69E2E] text-[#3F1D1D]
         rounded-full border-2 border-[#FAF5E4] hover:bg-[#b9891f] transition-all shadow-inner"
       >
