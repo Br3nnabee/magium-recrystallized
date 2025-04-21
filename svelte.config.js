@@ -15,6 +15,7 @@ const config = {
       fallback: 'index.html'
     }),
     paths: {
+
       base: dev || isTauri ? '' : `/${repo}`
     }
   }
