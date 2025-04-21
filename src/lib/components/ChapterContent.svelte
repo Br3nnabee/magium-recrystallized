@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { content } from "$lib/stores/passagestore";
+  import { onMount } from "svelte";
+  import { content, loadContent } from "$lib/stores/passagestore";
+
+  onMount(() => {
+    loadContent();
+  });
 </script>
 
 <slot>

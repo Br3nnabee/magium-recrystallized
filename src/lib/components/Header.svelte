@@ -1,6 +1,7 @@
 <script lang="ts">
   import Menu from "./Menu.svelte";
   import { menuOpen } from "$lib/stores/menu";
+
   export let book: number;
   export let chapter: number;
 </script>
