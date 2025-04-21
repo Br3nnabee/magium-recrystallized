@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import { sveltekit } from "@sveltejs/kit/vite";
 import tailwindcss from '@tailwindcss/vite';
+import wasmPack from 'vite-plugin-wasm-pack';
 
 // @ts-expect-error process is a nodejs global
 const host = process.env.TAURI_DEV_HOST;
@@ -9,7 +10,8 @@ const host = process.env.TAURI_DEV_HOST;
 export default defineConfig(async () => ({
   plugins: [
     tailwindcss(),
-    sveltekit()
+    sveltekit(),
+    wasmPack('./wasm_module')
   ],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`

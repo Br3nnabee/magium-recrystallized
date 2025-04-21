@@ -1,0 +1,38 @@
+extern crate cfg_if;
+extern crate wasm_bindgen;
+
+mod utils;
+
+use cfg_if::cfg_if;
+use js_sys::Array;
+use wasm_bindgen::prelude::*;
+
+cfg_if! {
+    if #[cfg(feature = "wee_alloc")] {
+        extern crate wee_alloc;
+        #[global_allocator]
+        static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+    }
+}
+
+#[wasm_bindgen]
+pub fn get_content() -> Array {
+    let lines: Vec<&str> = vec![
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et luctus dolor. Donec viverra viverra metus sit amet hendrerit. Nam cursus libero massa, id suscipit augue pulvinar nec. Suspendisse non efficitur mauris. Morbi sagittis dui ipsum, ut ullamcorper libero molestie nec. Mauris porta tempus metus, et faucibus ipsum rhoncus eu. Donec suscipit luctus erat, at dictum tellus accumsan eleifend. Nam iaculis porta quam id porta. Nulla quis arcu vitae neque finibus convallis.",
+        "Curabitur vitae leo id mauris molestie dictum. Aliquam cursus lorem nibh, in pellentesque magna pellentesque sit amet. Duis luctus interdum lobortis. Maecenas aliquam ornare feugiat. Nunc consectetur orci non enim interdum, ac dignissim velit facilisis. Praesent sagittis, sem sit amet rutrum accumsan, ligula lorem egestas massa, sit amet tempor leo metus et nisl. Fusce eu bibendum nibh. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin at rutrum lacus. Vivamus a vestibulum neque. Integer aliquet consectetur varius.",
+        "Aliquam venenatis ornare ipsum, id mattis urna mollis sit amet. Donec sit amet sollicitudin urna. Donec iaculis tristique consectetur. Vestibulum ultricies pretium ex sed eleifend. Donec scelerisque sed arcu sagittis dapibus. Praesent maximus congue sem, blandit cursus tortor sodales vel. Morbi mollis consequat sapien vitae tempor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus sit amet libero sed libero lacinia rutrum. Aliquam erat volutpat. Pellentesque quis vestibulum lacus. Fusce non commodo turpis. Mauris tincidunt diam non tortor tincidunt bibendum. Curabitur ligula urna, fringilla nec ipsum vitae, ultrices egestas diam. Cras rutrum faucibus nulla a interdum. Phasellus quis nibh sit amet justo fringilla placerat.",
+        "Phasellus ac molestie leo, vel malesuada erat. Vivamus maximus turpis et tellus rutrum, eu sollicitudin nunc hendrerit. Suspendisse pellentesque lorem eros, et aliquet nunc cursus in. Nunc in tempor metus. Nunc rhoncus nunc lorem, a suscipit elit posuere vel. Mauris vehicula, eros id laoreet consequat, neque orci placerat metus, dictum auctor augue neque eu nulla. Sed ut rhoncus felis, eget luctus diam.",
+        "Donec et mattis nisi. Vestibulum vulputate nibh sit amet ligula molestie, ac interdum lacus varius. Morbi sem massa, mollis sed nibh at, porttitor dictum ex. Pellentesque eget lectus tempor, lacinia ex ultricies, luctus nibh. Donec id augue dapibus dui pretium eleifend dignissim aliquet mauris. Aenean dictum metus quis massa condimentum mollis. Proin dictum nisi ac dolor mattis pulvinar. Morbi at elit id nunc egestas commodo. Aenean eget iaculis nulla. Vestibulum gravida placerat magna nec interdum. Nullam porttitor ligula vitae consequat pulvinar. Morbi in maximus erat, ut pharetra enim.",
+        "Sed commodo mattis magna, at ultrices justo aliquet non. Donec ligula sapien, efficitur at justo ac, pellentesque hendrerit nisi. Donec sit amet vestibulum quam. Nam leo lacus, dignissim sed tortor porttitor, finibus vehicula lorem. Pellentesque ut suscipit risus. Quisque luctus pulvinar placerat. Etiam ornare dolor at justo dictum ullamcorper. Etiam aliquet convallis dui. Fusce eget ligula egestas, sagittis neque sit amet, tincidunt dui. In et neque sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Interdum et malesuada fames ac ante ipsum primis in faucibus.",
+        "Nulla euismod sagittis lacus, eu pharetra sem. Sed posuere purus nibh, eget pellentesque risus blandit at. Sed et leo tellus. Nulla facilisi. Integer sit amet dolor non metus viverra vehicula eget condimentum odio. Pellentesque et volutpat urna, nec accumsan eros. Maecenas ac laoreet ligula. Sed urna nulla, porta eget malesuada non, sodales et purus. Phasellus pretium semper magna.",
+        "Mauris tristique felis vitae nibh efficitur, non egestas magna consequat. Fusce sed diam quis sapien viverra fermentum quis finibus risus. Nulla sed aliquam magna, quis lobortis mauris. Donec congue eros finibus nisi dapibus, vel porttitor odio luctus. Mauris bibendum tincidunt ultricies. Nunc quis erat a turpis mattis eleifend eget ac lectus. Ut varius efficitur rutrum. Maecenas vitae arcu maximus, cursus leo placerat, porttitor diam. Duis nec ante quis eros scelerisque venenatis. Nunc varius elit est, et facilisis eros efficitur ac. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut odio sit amet nulla facilisis consectetur.",
+        "Aliquam eu pulvinar nulla. Nunc tincidunt erat vel fringilla sollicitudin. Donec at lacus a nisi ultrices consequat. Mauris ac quam velit. Maecenas mi urna, porttitor id metus a, vehicula ullamcorper velit. Aenean vulputate, nulla quis venenatis pretium, augue urna ultricies quam, non ornare dui nisl eget nunc. Morbi luctus sollicitudin dictum.",
+        "Curabitur lobortis venenatis fermentum. Duis pharetra, odio sed tempor hendrerit, odio magna mattis lorem, ac lobortis nunc erat et nisi. Aliquam luctus laoreet bibendum. Vestibulum venenatis magna eget lacinia commodo. Aliquam vestibulum euismod libero, facilisis condimentum lorem lobortis quis. Quisque tempor bibendum arcu et cursus. Mauris volutpat sagittis mollis. Suspendisse in gravida nulla. Pellentesque nec posuere ante. Aenean tortor sapien, cursus id consectetur eu, commodo consequat nisi. Nam luctus lorem id ligula posuere, at gravida massa vulputate.",
+    ];
+
+    let arr = Array::new();
+    for line in lines {
+        arr.push(&JsValue::from_str(line));
+    }
+    arr
+}
