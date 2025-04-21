@@ -7,6 +7,13 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[profile.release]
+opt-level = "s"   # Optimize for size
+lto = true        # Enable Link Time Optimization
+codegen-units = 1 # Reduce codegen units for better optimization
+panic = "abort"   # Simplify panic handling
+strip = true      # Remove debug symbols - breaks appimage bundling on arch
+
 [lib]
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.

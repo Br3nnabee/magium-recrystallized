@@ -140,7 +140,7 @@
       </svg>
       <img
         src="{base}/logo-red.png"
-        alt="Game Logo"
+        alt="Red Logo"
         class="absolute aspect-square w-[max(30vw,75vh)] opacity-30 drop-shadow-2xl"
       />
     </div>
