@@ -7,7 +7,7 @@
 </script>
 
 <header
-  class="flex items-center bg-gray-800 text-neutral-100 px-4 sm:px-6 md:px-8 lg:px-12 py-2"
+  class="flex items-center bg-gray-900 dark:bg-gray-800 text-neutral-50 px-4 sm:px-6 md:px-8 lg:px-12 py-2"
 >
   <button
     class="font-semibold hover:text-neutral-300 text-xl py-2"

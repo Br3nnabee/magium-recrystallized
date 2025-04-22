@@ -49,7 +49,7 @@
     class="
       fixed inset-y-0 left-0 z-50
       p-8 overflow-auto w-full
-      bg-gray-100 dark:bg-gray-900
+      bg-gray-50 dark:bg-gray-900
     "
     class:max-w-md={useMaxWidth}
     class:max-w-full={!useMaxWidth}
@@ -83,7 +83,7 @@
     <!-- Menu content -->
     <nav class="mt-16 space-y-6">
       <h2
-        class="text-4xl font-extrabold text-neutral-800 dark:text-neutral-100"
+        class="text-4xl font-extrabold text-neutral-900 dark:text-neutral-50"
         class:text-left={useMaxWidth}
         class:text-center={!useMaxWidth}
       >
@@ -94,7 +94,7 @@
           <li>
             <button
               class="w-full min-w-[12rem] px-6 py-4 text-lg font-medium bg-gray-800
-                     text-neutral-100 dark:bg-gray-100 dark:text-neutral-800
+                     text-neutral-50 dark:bg-gray-50 dark:text-neutral-900
                      rounded-lg shadow hover:shadow-md transition"
               on:click={() => console.log(item)}
               class:text-left={useMaxWidth}

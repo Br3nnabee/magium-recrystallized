@@ -1,121 +1,103 @@
-<script context="module" lang="ts">
+<script lang="ts">
+  import { onMount, tick, onDestroy } from "svelte";
+  import { initialize, currentNode, goTo } from "$lib/stores/passagestore";
+  import ChoiceButton from "./ChoiceButton.svelte";
+
   export interface Choice {
     label: string;
     action: () => void;
   }
-</script>
 
-<script lang="ts">
-  import { onMount, tick } from "svelte";
-  import ChoiceButton from "./ChoiceButton.svelte";
-
-  // TODO: Optimize this to not have to render hidden
-
-  export let choices: Choice[] = [];
-
+  let choices: Choice[] = [];
   let container: HTMLDivElement;
   let measureContainer: HTMLDivElement;
-
-  // runtime values
   let columns = 1;
   let maxButtonWidth = 0;
-
   const GAP = 16;
 
-  // measure the “natural” widths of all buttons
+  // Initialize the story once
+  onMount(() => {
+    initialize();
+    window.addEventListener("resize", () =>
+      updateLayout(container.clientWidth),
+    );
+  });
+
+  // Rebuild choices whenever the current node changes
+  $: {
+    const edges = $currentNode.edges;
+    choices = edges.map((e) => ({
+      label: e.label,
+      action: async () => {
+        if (e.dest >= 0) await goTo(e.dest);
+      },
+    }));
+  }
+
+  // Measure button widths to compute grid layout
+  $: if (choices.length) measureSizes();
+
   async function measureSizes() {
-    // wait for DOM to update
     await tick();
     if (!measureContainer) return;
-
-    maxButtonWidth = 0;
-    for (const child of Array.from(
-      measureContainer.children,
-    ) as HTMLElement[]) {
-      // get the width needed to render label without wrapping
-      const w = child.getBoundingClientRect().width;
-      if (w > maxButtonWidth) maxButtonWidth = w;
-    }
-
-    // recalc layout after measuring
+    maxButtonWidth = Math.max(
+      ...Array.from(measureContainer.children).map(
+        (c) => (c as HTMLElement).getBoundingClientRect().width,
+      ),
+    );
     updateLayout(container.clientWidth);
   }
 
-  function updateLayout(containerWidth: number) {
+  function updateLayout(width: number) {
     const n = choices.length;
-    // how many columns could we fit at min width?
     const maxCols = Math.max(
       1,
-      Math.floor((containerWidth + GAP) / (maxButtonWidth + GAP)),
+      Math.floor((width + GAP) / (maxButtonWidth + GAP)),
     );
-
     if (n <= maxCols) {
-      // everything fits in one row
       columns = n;
       return;
     }
-
-    // find “perfect‐rectangle” factors of n whose cols ≤ maxCols
-    type Pair = { rows: number; cols: number };
-    const pairs: Pair[] = [];
+    const pairs: { rows: number; cols: number }[] = [];
     for (let i = 1; i * i <= n; i++) {
       if (n % i === 0) {
-        const j = n / i;
-        if (i <= maxCols) pairs.push({ rows: j, cols: i });
-        if (j <= maxCols) pairs.push({ rows: i, cols: j });
+        pairs.push({ rows: n / i, cols: i }, { rows: i, cols: n / i });
       }
     }
-
-    if (pairs.length > 0) {
-      pairs.sort((a, b) => {
+    const best = pairs
+      .filter((p) => p.cols <= maxCols)
+      .sort((a, b) => {
         const da = Math.abs(a.rows - a.cols);
         const db = Math.abs(b.rows - b.cols);
-        if (da !== db) return da - db;
-        return b.cols - a.cols;
-      });
-      columns = pairs[0].cols;
-    } else {
-      // no exact factorization fits → full‑width stack
-      columns = 1;
-    }
+        return da !== db ? da - db : b.cols - a.cols;
+      })[0];
+    columns = best?.cols || 1;
   }
 
-  onMount(() => {
-    measureSizes();
-
-    // re‐measure & re‐layout on container resize
-    const ro = new ResizeObserver((entries) => {
-      for (const { contentRect } of entries) {
-        updateLayout(contentRect.width);
-      }
-    });
-    ro.observe(container);
-    return () => ro.disconnect();
+  onDestroy(() => {
+    window.removeEventListener("resize", () =>
+      updateLayout(container.clientWidth),
+    );
   });
-
-  // re‐measure if choices change
-  $: if (choices) {
-    measureSizes();
-  }
 </script>
 
-<!-- off‑screen measurement container -->
+<!-- Hidden measurer for button widths -->
 <div
   bind:this={measureContainer}
   style="position:absolute; top:-9999px; left:-9999px; visibility:hidden;"
 >
-  {#each choices as choice (choice.label)}
-    <ChoiceButton label={choice.label} action={() => {}} />
+  {#each choices as c (c.label)}
+    <ChoiceButton label={c.label} />
   {/each}
 </div>
 
-<!-- actual grid -->
+<!-- Actual choice grid -->
 <div
   bind:this={container}
   class="grid gap-4"
   style="grid-template-columns: repeat({columns}, minmax(0, 1fr));"
 >
-  {#each choices as choice (choice.label)}
-    <ChoiceButton label={choice.label} action={choice.action} />
+  {#each choices as c (c.label)}
+    <ChoiceButton label={c.label} on:click={c.action} />
   {/each}
 </div>

@@ -1,14 +1,6 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { content, loadContent } from "$lib/stores/passagestore";
-
-  onMount(() => {
-    loadContent();
-  });
+  import SvelteMarkdown from "@humanspeak/svelte-markdown";
+  import { initialize, currentNode } from "$lib/stores/passagestore";
 </script>
 
-<slot>
-  {#each $content as paragraph}
-    <p class="text-lg mb-8">{paragraph}</p>
-  {/each}
-</slot>
+<SvelteMarkdown source={$currentNode.content} />
