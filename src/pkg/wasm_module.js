@@ -137,48 +137,40 @@ export function __wasm_start() {
     wasm.__wasm_start();
 }
 
-/**
- * @returns {Array<any>}
- */
-export function get_content() {
-    const ret = wasm.get_content();
-    return ret;
-}
-
 function __wbg_adapter_20(arg0, arg1, arg2) {
     wasm.closure72_externref_shim(arg0, arg1, arg2);
 }
 
-function __wbg_adapter_85(arg0, arg1, arg2, arg3) {
+function __wbg_adapter_84(arg0, arg1, arg2, arg3) {
     wasm.closure84_externref_shim(arg0, arg1, arg2, arg3);
 }
 
 const __wbindgen_enum_RequestMode = ["same-origin", "no-cors", "cors", "navigate"];
 
-const CyoaClientFinalization = (typeof FinalizationRegistry === 'undefined')
+const CyoaGameFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_cyoaclient_free(ptr >>> 0, 1));
+    : new FinalizationRegistry(ptr => wasm.__wbg_cyoagame_free(ptr >>> 0, 1));
 
-export class CyoaClient {
+export class CyoaGame {
 
     static __wrap(ptr) {
         ptr = ptr >>> 0;
-        const obj = Object.create(CyoaClient.prototype);
+        const obj = Object.create(CyoaGame.prototype);
         obj.__wbg_ptr = ptr;
-        CyoaClientFinalization.register(obj, obj.__wbg_ptr, obj);
+        CyoaGameFinalization.register(obj, obj.__wbg_ptr, obj);
         return obj;
     }
 
     __destroy_into_raw() {
         const ptr = this.__wbg_ptr;
         this.__wbg_ptr = 0;
-        CyoaClientFinalization.unregister(this);
+        CyoaGameFinalization.unregister(this);
         return ptr;
     }
 
     free() {
         const ptr = this.__destroy_into_raw();
-        wasm.__wbg_cyoaclient_free(ptr, 0);
+        wasm.__wbg_cyoagame_free(ptr, 0);
     }
     /**
      * Async constructor
@@ -187,7 +179,7 @@ export class CyoaClient {
     constructor(path) {
         const ptr0 = passStringToWasm0(path, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.cyoaclient_new(ptr0, len0);
+        const ret = wasm.cyoagame_new(ptr0, len0);
         return ret;
     }
     /**
@@ -195,7 +187,7 @@ export class CyoaClient {
      * @returns {Array<any>}
      */
     chunk_ids() {
-        const ret = wasm.cyoaclient_chunk_ids(this.__wbg_ptr);
+        const ret = wasm.cyoagame_chunk_ids(this.__wbg_ptr);
         return ret;
     }
     /**
@@ -203,7 +195,7 @@ export class CyoaClient {
      * @returns {Promise<string>}
      */
     get_root_node() {
-        const ret = wasm.cyoaclient_get_root_node(this.__wbg_ptr);
+        const ret = wasm.cyoagame_get_root_node(this.__wbg_ptr);
         return ret;
     }
     /**
@@ -212,7 +204,7 @@ export class CyoaClient {
      * @returns {Promise<string>}
      */
     get_content(idx) {
-        const ret = wasm.cyoaclient_get_content(this.__wbg_ptr, idx);
+        const ret = wasm.cyoagame_get_content(this.__wbg_ptr, idx);
         return ret;
     }
     /**
@@ -221,7 +213,7 @@ export class CyoaClient {
      * @returns {Promise<string>}
      */
     get_node_content(idx) {
-        const ret = wasm.cyoaclient_get_node_content(this.__wbg_ptr, idx);
+        const ret = wasm.cyoagame_get_node_content(this.__wbg_ptr, idx);
         return ret;
     }
     /**
@@ -229,7 +221,7 @@ export class CyoaClient {
      * @returns {Promise<Array<any>>}
      */
     get_edges(idx) {
-        const ret = wasm.cyoaclient_get_edges(this.__wbg_ptr, idx);
+        const ret = wasm.cyoagame_get_edges(this.__wbg_ptr, idx);
         return ret;
     }
     /**
@@ -237,7 +229,7 @@ export class CyoaClient {
      * @returns {Promise<string>}
      */
     get_edge_label(idx) {
-        const ret = wasm.cyoaclient_get_edge_label(this.__wbg_ptr, idx);
+        const ret = wasm.cyoagame_get_edge_label(this.__wbg_ptr, idx);
         return ret;
     }
     /**
@@ -246,7 +238,7 @@ export class CyoaClient {
      * @returns {Promise<string>}
      */
     get_edge_destination(idx) {
-        const ret = wasm.cyoaclient_get_edge_destination(this.__wbg_ptr, idx);
+        const ret = wasm.cyoagame_get_edge_destination(this.__wbg_ptr, idx);
         return ret;
     }
 }
@@ -304,8 +296,8 @@ function __wbg_get_imports() {
         const ret = arg0.call(arg1, arg2);
         return ret;
     }, arguments) };
-    imports.wbg.__wbg_cyoaclient_new = function(arg0) {
-        const ret = CyoaClient.__wrap(arg0);
+    imports.wbg.__wbg_cyoagame_new = function(arg0) {
+        const ret = CyoaGame.__wrap(arg0);
         return ret;
     };
     imports.wbg.__wbg_error_524f506f44df1645 = function(arg0) {
@@ -376,7 +368,7 @@ function __wbg_get_imports() {
                 const a = state0.a;
                 state0.a = 0;
                 try {
-                    return __wbg_adapter_85(a, state0.b, arg0, arg1);
+                    return __wbg_adapter_84(a, state0.b, arg0, arg1);
                 } finally {
                     state0.a = a;
                 }
@@ -482,7 +474,7 @@ function __wbg_get_imports() {
         const ret = false;
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper638 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper634 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 73, __wbg_adapter_20);
         return ret;
     };

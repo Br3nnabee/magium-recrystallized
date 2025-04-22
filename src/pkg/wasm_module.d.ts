@@ -1,8 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export function __wasm_start(): void;
-export function get_content(): Array<any>;
-export class CyoaClient {
+export class CyoaGame {
   free(): void;
   /**
    * Async constructor
@@ -36,17 +35,16 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
-  readonly __wbg_cyoaclient_free: (a: number, b: number) => void;
-  readonly cyoaclient_new: (a: number, b: number) => any;
-  readonly cyoaclient_chunk_ids: (a: number) => any;
-  readonly cyoaclient_get_root_node: (a: number) => any;
-  readonly cyoaclient_get_content: (a: number, b: number) => any;
-  readonly cyoaclient_get_node_content: (a: number, b: number) => any;
-  readonly cyoaclient_get_edges: (a: number, b: number) => any;
-  readonly cyoaclient_get_edge_label: (a: number, b: number) => any;
-  readonly cyoaclient_get_edge_destination: (a: number, b: number) => any;
   readonly __wasm_start: () => void;
-  readonly get_content: () => any;
+  readonly __wbg_cyoagame_free: (a: number, b: number) => void;
+  readonly cyoagame_new: (a: number, b: number) => any;
+  readonly cyoagame_chunk_ids: (a: number) => any;
+  readonly cyoagame_get_root_node: (a: number) => any;
+  readonly cyoagame_get_content: (a: number, b: number) => any;
+  readonly cyoagame_get_node_content: (a: number, b: number) => any;
+  readonly cyoagame_get_edges: (a: number, b: number) => any;
+  readonly cyoagame_get_edge_label: (a: number, b: number) => any;
+  readonly cyoagame_get_edge_destination: (a: number, b: number) => any;
   readonly rust_zstd_wasm_shim_qsort: (a: number, b: number, c: number, d: number) => void;
   readonly rust_zstd_wasm_shim_malloc: (a: number) => number;
   readonly rust_zstd_wasm_shim_memcmp: (a: number, b: number, c: number) => number;
