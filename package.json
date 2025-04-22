@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "npm run wasm && vite dev",
-    "build": "vite build",
+    "build": "npm run wasm && vite build",
     "build:tauri": "VITE_TAURI_BUILD=true vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -29,7 +29,6 @@
     "svelte-check": "^4.0.0",
     "tailwindcss": "^4.1.4",
     "typescript": "~5.6.2",
-    "vite": "^6.0.3",
-    "vite-plugin-wasm-pack": "^0.1.12"
+    "vite": "^6.0.3"
   }
 }

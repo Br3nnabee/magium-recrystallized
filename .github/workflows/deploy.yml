@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: 20
 
+      - run: cargo install wasm-pack
       - run: npm ci
       - run: npm run build
 
