@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import { writable, type Writable } from 'svelte/store';
 import init, { get_content } from 'wasm_module';
 
@@ -15,7 +14,6 @@ export async function loadContent() {
   // Convert to a real JS array (so it serializes, maps, etc.)
   const jsArr = Array.from(wasmArray);
   content.set(jsArr);
-=======
 import { writable, derived, get } from 'svelte/store';
 import {
   fetchChunkIds,
