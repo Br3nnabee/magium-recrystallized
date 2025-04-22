@@ -16,7 +16,7 @@ const rootCache: Record<string, number> = {};
 async function getClient(path: string): Promise<ClientType> {
   await ready;
   if (!(path in clients)) {
-    clients[path] = new CyoaClient(path);
+    clients[path] = new CyoaGame(path);
     console.log('[CYOA] instantiated client for', path);
   }
   return clients[path];
