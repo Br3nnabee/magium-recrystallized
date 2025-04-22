@@ -1,5 +1,5 @@
-import init, { CyoaClient } from '../pkg/wasm_module.js';
-import type { CyoaClient as ClientType } from '../pkg/wasm_module.js';
+import init, { CyoaGame } from '../pkg/wasm_module.js';
+import type { CyoaGame as ClientType } from '../pkg/wasm_module.js';
 
 // Initialize the WASM module only once
 const wasmUrl = new URL('../pkg/wasm_module_bg.wasm', import.meta.url);
