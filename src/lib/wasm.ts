@@ -1,101 +1,108 @@
 import init, { CyoaGame } from '../pkg/wasm_module.js';
 import type { CyoaGame as ClientType } from '../pkg/wasm_module.js';
 
-// Initialize the WASM module only once
+// Define the story file here so components don't pass it around
+const STORY_PATH = 'magium.story';
+
 const wasmUrl = new URL('../pkg/wasm_module_bg.wasm', import.meta.url);
-const ready = init({ url: wasmUrl.href });
+export const ready = init({ url: wasmUrl.href });
 
 type ClientMap = Record<string, ClientType>;
 const clients: ClientMap = {};
-const chunkIdCache: Record<string, string[]> = {};
-const rootCache: Record<string, number> = {};
 
 /**
- * Ensure the client for a given story path is instantiated once.
+ * Instantiate (or return) the single CyoaClient for our STORY_PATH.
  */
-async function getClient(path: string): Promise<ClientType> {
+async function getClient(): Promise<ClientType> {
   await ready;
-  if (!(path in clients)) {
-    clients[path] = new CyoaGame(path);
-    console.log('[CYOA] instantiated client for', path);
+  if (!(STORY_PATH in clients)) {
+    clients[STORY_PATH] = new CyoaGame(STORY_PATH);
+    console.log('[CYOA] instantiated client for', STORY_PATH);
   }
-  return clients[path];
+  return clients[STORY_PATH];
 }
 
 /**
- * Normalize a story path to a URL. Root-relative or absolute URLs are returned as-is;
- * otherwise the path is assumed to live under the static dir at web root.
+ * Fetch the complete list of chunk IDs for the story.
  */
-function canonicalize(path: string): string {
-  if (path.startsWith('/') || /^https?:\/\//.test(path)) {
-    return path;
-  }
-  return `/${path}`;
-}
-
-/**
- * Load and cache the array of all chunk IDs (hex strings) for a given story.
- */
-export async function fetchChunkIds(rawPath: string): Promise<string[]> {
-  const path = canonicalize(rawPath);
-  if (chunkIdCache[path]) return chunkIdCache[path];
-
-  const client = await getClient(path);
+export async function fetchChunkIds(): Promise<string[]> {
+  const client = await getClient();
   const ids = Array.from(client.chunk_ids().values()) as string[];
-  chunkIdCache[path] = ids;
-  console.log('[CYOA] loaded chunk IDs (', ids.length, ') for', path);
+  console.log('[CYOA] fetchChunkIds →', ids.length, 'chunks');
   return ids;
 }
 
 /**
- * Load and cache the root node index for a given story.
+ * Fetch the actual text for a node by first mapping node → content chunk.
  */
-export async function fetchRootIndex(rawPath: string): Promise<number> {
-  const path = canonicalize(rawPath);
-  if (rootCache[path] !== undefined) return rootCache[path];
+export async function fetchNodePassage(nodeIdx: number): Promise<string> {
+  const client = await getClient();
 
-  const client = await getClient(path);
-  const rootHex = await client.get_root_node();
-  const ids = await fetchChunkIds(path);
+  // 1) ask WASM which chunk holds this node's content
+  const contentHex: string = await client.get_node_content(nodeIdx);
+  console.log('[CYOA] node→content chunk ID:', contentHex);
+
+  // 2) locate that hex in the full chunk list
+  const ids = await fetchChunkIds();
+  const contentIdx = ids.findIndex(id => id === contentHex);
+  if (contentIdx < 0) {
+    throw new Error(`Content chunk ${contentHex} not found in index`);
+  }
+
+  // 3) fetch the text from the correct chunk index
+  const txt: string = await client.get_content(contentIdx);
+  console.log(`[CYOA] fetchNodePassage [nodeIdx=${nodeIdx}] → chunkIdx=${contentIdx}`, txt);
+  return txt;
+}
+
+/**
+ * Alias for backward compatibility: fetchContent(nodeIdx) → fetchNodePassage(nodeIdx)
+ */
+export const fetchContent = fetchNodePassage;
+
+/**
+ * Fetch the outgoing edge IDs (hex strings) for a node.
+ */
+export async function fetchEdges(nodeIdx: number): Promise<string[]> {
+  const client = await getClient();
+  const jsArr = await client.get_edges(nodeIdx);
+  const edges = Array.from(jsArr.values()) as string[];
+  console.log(`[CYOA] fetchEdges [${nodeIdx}] →`, edges);
+  return edges;
+}
+
+/**
+ * Fetch the human-readable label for an edge chunk index.
+ */
+export async function fetchEdgeLabel(edgeIdx: number): Promise<string> {
+  const client = await getClient();
+  const label: string = await client.get_edge_label(edgeIdx);
+  console.log(`[CYOA] fetchEdgeLabel [${edgeIdx}] →`, label);
+  return label;
+}
+
+/**
+ * Fetch the destination chunk hex ID for an edge chunk index.
+ */
+export async function fetchEdgeDestination(edgeIdx: number): Promise<string> {
+  const client = await getClient();
+  const destHex: string = await client.get_edge_destination(edgeIdx);
+  console.log(`[CYOA] fetchEdgeDestination [${edgeIdx}] →`, destHex);
+  return destHex;
+}
+
+/**
+ * Fetch and resolve the root node index for the story.
+ */
+export async function fetchRootIndex(): Promise<number> {
+  const client = await getClient();
+  const rootHex: string = await client.get_root_node();
+  console.log('[CYOA] root chunk ID:', rootHex);
+
+  const ids = await fetchChunkIds();
   const idx = ids.findIndex(id => id === rootHex);
-  if (idx < 0) throw new Error(`Root chunk ${rootHex} not found`);
-  rootCache[path] = idx;
-  console.log('[CYOA] root index =', idx, 'for', path);
+  if (idx < 0) throw new Error(`Root chunk ${rootHex} not in index`);
+
+  console.log('[CYOA] root index =', idx);
   return idx;
-}
-
-/**
- * Fetch the text content for a specific chunk index.
- */
-export async function fetchContent(rawPath: string, idx: number): Promise<string> {
-  const path = canonicalize(rawPath);
-  const client = await getClient(path);
-  return await client.get_content(idx);
-}
-
-/**
- * Fetch the array of outgoing edge IDs (hex strings) for a node.
- */
-export async function fetchEdges(rawPath: string, nodeIdx: number): Promise<string[]> {
-  const path = canonicalize(rawPath);
-  const client = await getClient(path);
-  return Array.from((await client.get_edges(nodeIdx)).values()) as string[];
-}
-
-/**
- * Fetch the label for an edge by its chunk index in the file.
- */
-export async function fetchEdgeLabel(rawPath: string, edgeIdx: number): Promise<string> {
-  const path = canonicalize(rawPath);
-  const client = await getClient(path);
-  return await client.get_edge_label(edgeIdx);
-}
-
-/**
- * Fetch the destination chunk ID (hex string) for an edge.
- */
-export async function fetchEdgeDestination(rawPath: string, edgeIdx: number): Promise<string> {
-  const path = canonicalize(rawPath);
-  const client = await getClient(path);
-  return await client.get_edge_destination(edgeIdx);
 }
