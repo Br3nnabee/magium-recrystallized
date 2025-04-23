@@ -1,8 +1,9 @@
 import init, { CyoaGame } from '../pkg/wasm_module.js';
 import type { CyoaGame as ClientType } from '../pkg/wasm_module.js';
+import { base } from '$app/paths';
 
 // Define the story file here so components don't pass it around
-const STORY_PATH = 'magium.story';
+export const STORY_PATH = `${base}/magium.story`;
 
 const wasmUrl = new URL('../pkg/wasm_module_bg.wasm', import.meta.url);
 export const ready = init({ url: wasmUrl.href });
