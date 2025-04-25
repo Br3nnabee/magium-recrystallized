@@ -1,28 +1,39 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      (function () {
+        const stored = localStorage.getItem("theme");
+        const useDark =
+          stored === "dark" ||
+          (stored === null &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", useDark);
+      })();
+    </script>
+
     <meta charset="utf-8" />
     <link rel="icon" href="./favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Magium: Recrystallized</title>
     
-		<link rel="modulepreload" href="./_app/immutable/entry/start.Brbxx282.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/Cnqf8fhk.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/Co2qFE4W.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/CqWSXPmY.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/11pYMMr4.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/app.BQh8U-JD.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/5EbBoYc8.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/CYNC4G3z.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/BbSO6HSO.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/Dkm1U3ZK.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/BspYtOcO.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.Bf9n-qbn.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/D5LORaPA.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/Bdor43E9.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DbvhrCTH.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/FLnjHyBM.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.Dg3gQlr1.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CXOU7w8y.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CPMaYMTp.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/D5PV3JFU.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/Ch8h00uG.js">
   </head>
+
   <body data-sveltekit-preload-data="hover">
     <div style="display: contents">
 			<script>
 				{
-					__sveltekit_1s6j2mt = {
+					__sveltekit_1ediwls = {
 						base: new URL(".", location).pathname.slice(0, -1),
 						assets: "/magium-recrystallized"
 					};
@@ -30,8 +41,8 @@
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("./_app/immutable/entry/start.Brbxx282.js"),
-						import("./_app/immutable/entry/app.BQh8U-JD.js")
+						import("./_app/immutable/entry/start.Bf9n-qbn.js"),
+						import("./_app/immutable/entry/app.Dg3gQlr1.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element);
 					});
