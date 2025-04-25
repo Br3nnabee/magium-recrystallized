@@ -74,7 +74,7 @@
     {
       name: "Rin Est",
       avatar:
-        "https://cdn.discordapp.com/guilds/1278729249947386047/users/286149710031486976/avatars/a2b5f898c4ddd10a3c2dda34e0b05ea1.webp",
+        "https://cdn.discordapp.com/avatars/286149710031486976/b916d5a1aa7c7c65e0b6b38940872399.webp",
     },
     {
       name: "Treatised War",
@@ -108,12 +108,11 @@
 </svelte:head>
 
 <main
-  class="min-h-screen text-[#FAF5E4] bg-gradient-to-br from-[#3F1D1D] via-[#1C0A0A] to-[#120404]"
+  class="min-h-screen text-[#FAF5E4] bg-gradient-to-br from-[#00000A] to-[#341638]"
 >
   <!-- Hero Section -->
   <section
     class="relative h-screen flex flex-col items-center justify-center text-center px-6"
-    style:opacity={$scrollY < 50 ? 1 : Math.max(0, 1 - ($scrollY - 50) / 500)}
   >
     <div
       class="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -139,18 +138,20 @@
         <circle cx="750" cy="550" r="20" fill="#D69E2E" />
       </svg>
       <img
-        src="{base}/logo-red.png"
+        src="{base}/image.png"
         alt="Red Logo"
-        class="absolute aspect-square w-[max(30vw,75vh)] opacity-30 drop-shadow-2xl"
+        class="absolute aspect-square w-[max(30vw,75vh)] opacity-50"
       />
     </div>
 
     <h1
-      class="relative z-10 text-5xl md:text-6xl font-black tracking-wide drop-shadow-lg"
+      class="relative z-10 text-5xl md:text-6xl font-black tracking-wide drop-shadow-2xl drop-shadow-black"
     >
       Magium: Recrystallized
     </h1>
-    <p class="mt-4 text-lg md:text-xl max-w-xl leading-relaxed drop-shadow-md">
+    <p
+      class="mt-4 text-lg md:text-xl max-w-xl leading-relaxed drop-shadow-2xl drop-shadow-black"
+    >
       Dreams, duels, and death. One mortal's path to magic.
     </p>
     <div
@@ -158,15 +159,15 @@
     >
       <a
         href="{base}/play"
-        class="inline-block px-8 py-3 font-semibold bg-[#D69E2E] text-[#3F1D1D]
-        rounded-full border-2 border-[#FAF5E4] hover:bg-[#b9891f] transition-all shadow-inner"
+        class="inline-block px-10 py-4 font-semibold bg-[#D69E2E] text-[#3F1D1D]
+        rounded-full hover:bg-[#b9891f] transition-all shadow-inner"
       >
         Play in Browser
       </a>
       <a
         href=""
-        class="inline-block px-8 py-3 font-semibold text-[#D69E2E] rounded-full
-        border-2 border-[#D69E2E] hover:bg-[#D69E2E] hover:text-[#3F1D1D] transition-colors"
+        class="inline-block px-10 py-4 font-semibold bg-[#D69E2E] text-[#3F1D1D]
+        rounded-full hover:bg-[#b9891f] transition-all shadow-inner"
       >
         Download App
       </a>
@@ -174,9 +175,9 @@
   </section>
 
   <!-- About Section -->
-  <section class="py-20 bg-[#2E1111]">
-    <div class="max-w-3xl mx-auto px-6 text-center space-y-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-[#D69E2E]">
+  <section>
+    <div class="max-w-3xl mx-auto px-6 text-center space-y-6 pt-10 pb-14">
+      <h2 class="text-center text-3xl font-extrabold text-[#D69E2E]">
         About Magium: Recrystallized
       </h2>
       <blockquote
@@ -199,64 +200,73 @@
         we have and share his work with the rest of the world.
       </p>
     </div>
+    <hr class="text-[#D69E2E] w-[75vw] m-auto" />
   </section>
 
   <!-- Join the Effort Section -->
-  <section class="py-20 bg-[#3F1D1D]">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-[#D69E2E] text-center">
+  <section class="py-16 bg-transparent">
+    <div class="max-w-6xl mx-auto px-6 grid gap-12">
+      <h2 class="text-center text-3xl font-extrabold text-[#D69E2E]">
         Join the Effort
       </h2>
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8">
+        <!-- Write & Curate Card -->
         <div
-          class="p-8 bg-[#3F1D1D] rounded-2xl border-2 border-[#D69E2E] hover:bg-[#472322] transition-colors"
+          class="p-8 bg-[#1a092f] border-2 border-[#D69E2E] rounded-2xl shadow-lg transition-colors"
         >
-          <h3 class="text-2xl font-bold mb-4">Write & Curate</h3>
-          <p class="mb-6">
-            Contribute to the story and wiki: Refine lore and write the very
-            story of Magium.
+          <h3 class="text-2xl font-bold mb-4 text-[#FAF5E4]">
+            Write &amp; Curate
+          </h3>
+          <p class="mb-6 text-[#d1cfe7]">
+            Contribute to the story and wiki: refine lore and shape the future
+            of Magium.
           </p>
-          <div class="flex flex-col space-y-4">
+          <div class="flex flex-col gap-4">
             <a
               href="https://discord.gg/VrTHsqKd93"
               target="_blank"
               class="px-6 py-3 bg-[#D69E2E] text-[#3F1D1D] font-semibold rounded-full
-              border-2 border-[#FAF5E4] hover:bg-[#b9891f] transition-all"
+              text-center transition-colors hover:bg-[#b9891f]"
             >
               Join the Writers' Discord
             </a>
             <a
               href="https://magium.fandom.com/wiki/Magium_Wiki"
               target="_blank"
-              class="px-6 py-3 text-[#D69E2E] font-semibold rounded-full border-2
-              border-[#D69E2E] hover:bg-[#D69E2E] hover:text-[#3F1D1D] transition-colors"
+              class="px-6 py-3 font-semibold text-[#D69E2E] border-2 border-[#D69E2E]
+              rounded-full text-center transition-colors hover:bg-[#D69E2E] hover:text-[#3F1D1D]"
             >
               Contribute to the Wiki
             </a>
           </div>
         </div>
+
+        <!-- Code & Improve Card -->
         <div
-          class="p-8 bg-[#3F1D1D] rounded-2xl border-2 border-[#D69E2E] hover:bg-[#472322] transition-colors"
+          class="p-8 bg-[#1a092f] border-2 border-[#D69E2E] rounded-2xl shadow-lg transition-colors"
         >
-          <h3 class="text-2xl font-bold mb-4">Code & Improve</h3>
-          <p class="mb-6">
-            Dive into the codebase: fix bugs, add features, and optimize
+          <h3 class="text-2xl font-bold mb-4 text-[#FAF5E4]">
+            Code &amp; Improve
+          </h3>
+          <p class="mb-6 text-[#d1cfe7]">
+            Explore the codebase: fix bugs, add features, and optimize
             performance.
           </p>
-          <div class="flex flex-col space-y-4">
+          <div class="flex flex-col gap-4">
             <a
               href=""
               target="_blank"
               class="px-6 py-3 bg-[#D69E2E] text-[#3F1D1D] font-semibold rounded-full
-              border-2 border-[#FAF5E4] hover:bg-[#b9891f] transition-all"
+              text-center transition-colors hover:bg-[#b9891f]"
             >
               Contributing Guide
             </a>
             <a
               href="https://github.com/Br3nnabee/magium-recrystallized"
               target="_blank"
-              class="px-6 py-3 text-[#D69E2E] font-semibold rounded-full border-2
-              border-[#D69E2E] hover:bg-[#D69E2E] hover:text-[#3F1D1D] transition-colors"
+              class="px-6 py-3 font-semibold text-[#D69E2E] border-2 border-[#D69E2E]
+              rounded-full text-center transition-colors hover:bg-[#D69E2E] hover:text-[#3F1D1D]"
             >
               GitHub Repo
             </a>
@@ -267,7 +277,7 @@
   </section>
 
   <!-- Contributors Display -->
-  <section class="py-10 bg-gradient-to-t from-[#120404] to-[#2E1111]">
+  <section class="py-10">
     <div class="max-w-5xl mx-auto px-6">
       <h2 class="text-2xl font-bold text-[#D69E2E] text-center mb-6">
         Contributors

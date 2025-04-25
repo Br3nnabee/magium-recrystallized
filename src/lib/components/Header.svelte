@@ -1,6 +1,6 @@
 <script lang="ts">
   import Menu from "./Menu.svelte";
-  import { menuOpen } from "$lib/stores/menu";
+  import { openMenu } from "$lib/stores/state";
 
   export let book: number;
   export let chapter: number;
@@ -11,7 +11,7 @@
 >
   <button
     class="font-semibold hover:text-neutral-300 text-xl py-2"
-    on:click={() => menuOpen.update((v) => !v)}
+    on:click={() => openMenu()}
   >
     MENU
   </button>
