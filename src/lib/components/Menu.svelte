@@ -17,7 +17,7 @@
 
   const THRESHOLD = 28 * 16 * 2.2;
   let innerWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-  let useMaxWidth = innerWidth > THRESHOLD;
+  $: useMaxWidth = innerWidth > THRESHOLD;
   let menuEl: HTMLElement;
   let menuWidth = 0;
 
@@ -190,7 +190,8 @@
         {#each buttons as { label, action }}
           <li>
             <button
-              class="w-full min-w-[12rem] px-6 py-4 text-lg font-medium bg-gray-800 text-neutral-50 dark:bg-gray-50 dark:text-neutral-900 rounded-lg shadow hover:shadow-md transition"
+              class="w-full min-w-[12rem] px-6 py-4 text-lg font-medium bg-gray-800 text-neutral-50
+              dark:bg-gray-50 dark:text-neutral-900 rounded-lg shadow hover:shadow-md transition"
               on:click={action}
               class:text-left={useMaxWidth}
               class:text-center={!useMaxWidth}
@@ -250,7 +251,7 @@
     {:else if $uiState.substate === MenuSubstate.Saves}
       <SavesPanel />
     {:else if $uiState.substate === MenuSubstate.Settings}
-      <SettingsPanel />
+      <SettingsPanel {useMaxWidth} />
     {:else if $uiState.substate === MenuSubstate.About}
       <AboutPanel />
     {/if}

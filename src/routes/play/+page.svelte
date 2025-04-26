@@ -3,6 +3,7 @@
   import ChapterContent from "$lib/components/ChapterContent.svelte";
   import ChoiceList from "$lib/components/ChoiceList.svelte";
   import Menu from "$lib/components/Menu.svelte";
+  import { colorTheme } from "$lib/stores/displaysettings";
 
   const book = 1;
   const chapter = 1;
