@@ -3,11 +3,15 @@
   import { initialize, currentNode, goTo } from "$lib/stores/passagestore";
   import ChoiceButton from "./ChoiceButton.svelte";
 
+  /**
+   * A helper type for mapping edge label → action
+   */
   export interface Choice {
     label: string;
-    action: () => void;
+    action: () => Promise<void>;
   }
 
+  // Reactive state
   let choices: Choice[] = [];
   let container: HTMLDivElement;
   let measureContainer: HTMLDivElement;
@@ -15,21 +19,30 @@
   let maxButtonWidth = 0;
   const GAP = 16;
 
-  // Initialize the story once
+  // On mount: initialize story and listen for resize
   onMount(() => {
     initialize();
-    window.addEventListener("resize", () =>
-      updateLayout(container.clientWidth),
-    );
+    window.addEventListener("resize", onResize);
   });
 
-  // Rebuild choices whenever the current node changes
+  // Cleanup listener
+  onDestroy(() => {
+    window.removeEventListener("resize", onResize);
+  });
+
+  function onResize() {
+    if (container) updateLayout(container.clientWidth);
+  }
+
+  // Rebuild choices whenever currentNode changes
   $: {
-    const edges = $currentNode.edges;
-    choices = edges.map((e) => ({
+    const node = $currentNode;
+    choices = node.edges.map((e) => ({
       label: e.label,
       action: async () => {
-        if (e.dest >= 0) await goTo(e.dest);
+        if (e.dest >= 0) {
+          await goTo(e.dest);
+        }
       },
     }));
   }
@@ -45,7 +58,7 @@
         (c) => (c as HTMLElement).getBoundingClientRect().width,
       ),
     );
-    updateLayout(container.clientWidth);
+    if (container) updateLayout(container.clientWidth);
   }
 
   function updateLayout(width: number) {
@@ -73,12 +86,6 @@
       })[0];
     columns = best?.cols || 1;
   }
-
-  onDestroy(() => {
-    window.removeEventListener("resize", () =>
-      updateLayout(container.clientWidth),
-    );
-  });
 </script>
 
 <!-- Hidden measurer for button widths -->
@@ -87,7 +94,7 @@
   style="position:absolute; top:-9999px; left:-9999px; visibility:hidden;"
 >
   {#each choices as c (c.label)}
-    <ChoiceButton label={c.label} />
+    <ChoiceButton label={c.label} action={c.action} />
   {/each}
 </div>
 
@@ -98,6 +105,6 @@
   style="grid-template-columns: repeat({columns}, minmax(0, 1fr));"
 >
   {#each choices as c (c.label)}
-    <ChoiceButton label={c.label} on:click={c.action} />
+    <ChoiceButton label={c.label} action={c.action} />
   {/each}
 </div>
