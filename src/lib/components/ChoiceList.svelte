@@ -1,8 +1,4 @@
-<script lang="ts">
-  import { onMount, tick, onDestroy } from "svelte";
-  import { initialize, currentNode, goTo } from "$lib/stores/passagestore";
-  import ChoiceButton from "./ChoiceButton.svelte";
-
+<script lang="ts" context="module">
   /**
    * A helper type for mapping edge label → action
    */
@@ -10,6 +6,12 @@
     label: string;
     action: () => Promise<void>;
   }
+</script>
+
+<script lang="ts">
+  import { onMount, tick, onDestroy } from "svelte";
+  import { initialize, currentNode, goTo } from "$lib/stores/passagestore";
+  import ChoiceButton from "./ChoiceButton.svelte";
 
   // Reactive state
   let choices: Choice[] = [];
