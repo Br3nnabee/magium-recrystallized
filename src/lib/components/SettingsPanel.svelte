@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { fly } from "svelte/transition";
   import {
     textWidthStore,
     colorThemeStore,
@@ -9,6 +10,18 @@
   } from "$lib/stores/displaysettings";
 
   let isDark = false;
+  let themeDirection = 1;
+  let widthDirection = 1;
+
+  const themes = Object.values(ColorTheme);
+  $: themeIndex = themes.findIndex((t) => t === $colorThemeStore);
+
+  const widths = [
+    { label: "Full Width", value: TextWidth.Full },
+    { label: "3/4 Width", value: TextWidth.Medium },
+    { label: "1/2 Width", value: TextWidth.Low },
+  ];
+  $: widthIndex = widths.findIndex((w) => w.value === $textWidthStore);
 
   onMount(() => {
     const stored = localStorage.getItem("theme");
@@ -23,17 +36,45 @@
     document.documentElement.classList.toggle("dark", isDark);
     localStorage.setItem("theme", isDark ? "dark" : "light");
   }
+
   function onToggleDark() {
     isDark = !isDark;
     applyTheme();
   }
 
-  function onSetColor(theme: ColorTheme) {
-    colorThemeStore.set(theme);
+  function prevTheme() {
+    themeDirection = -1;
+    const next = (themeIndex - 1 + themes.length) % themes.length;
+    colorThemeStore.set(themes[next]);
   }
 
-  function onSetWidth(width: TextWidth) {
-    textWidthStore.set(width);
+  function nextTheme() {
+    themeDirection = 1;
+    const next = (themeIndex + 1) % themes.length;
+    colorThemeStore.set(themes[next]);
+  }
+
+  function prevWidth() {
+    widthDirection = -1;
+    const next = (widthIndex - 1 + widths.length) % widths.length;
+    textWidthStore.set(widths[next].value);
+  }
+
+  function nextWidth() {
+    widthDirection = 1;
+    const next = (widthIndex + 1) % widths.length;
+    textWidthStore.set(widths[next].value);
+  }
+
+  // Click division handlers
+  function onThemeClick(e: MouseEvent) {
+    const btn = e.currentTarget as HTMLElement;
+    e.offsetX < btn.clientWidth / 2 ? prevTheme() : nextTheme();
+  }
+
+  function onWidthClick(e: MouseEvent) {
+    const btn = e.currentTarget as HTMLElement;
+    e.offsetX < btn.clientWidth / 2 ? prevWidth() : nextWidth();
   }
 </script>
 
@@ -49,7 +90,7 @@
       on:click={onToggleDark}
       class="w-full min-w-[12rem] px-6 py-4 text-lg font-medium
              bg-gray-800 text-neutral-50 dark:bg-gray-50 dark:text-neutral-900
-             rounded-lg shadow hover:shadow-md transition"
+             rounded-lg shadow hover:shadow-md transition-colors duration-200"
     >
       {#if isDark}
         Disable Dark Mode
@@ -58,38 +99,62 @@
       {/if}
     </button>
 
-    <div class="flex flex-row space-x-7">
-      {#each Object.values(ColorTheme) as theme}
-        <button
-          on:click={() => onSetColor(theme)}
-          class="w-full min-w-[5rem] px-6 py-4 text-lg font-medium
-                 bg-gray-800 text-neutral-50 dark:bg-gray-50 dark:text-neutral-900
-                 rounded-lg shadow hover:shadow-md transition
-                 {$colorThemeStore === theme
-            ? 'ring-2 ring-offset-2 ring-indigo-500'
-            : ''}"
-        >
-          {theme.charAt(0).toUpperCase() + theme.slice(1)}
-        </button>
-      {/each}
-    </div>
+    <button
+      on:click={onThemeClick}
+      class="w-full min-w-[12rem] flex flex-nowrap items-center justify-between
+             px-6 py-4 text-lg font-medium
+             bg-gray-800 text-neutral-50 dark:bg-gray-50 dark:text-neutral-900
+             rounded-lg shadow hover:shadow-md transition-colors duration-200"
+      aria-label="Cycle color themes"
+    >
+      <span class="text-xl">◀</span>
+
+      <div
+        class="flex-1 text-center overflow-hidden whitespace-nowrap"
+        style="min-width: 7rem;"
+      >
+        {#key themes[themeIndex]}
+          <span
+            class="inline-block w-full capitalize"
+            in:fly={{ x: themeDirection * 50, duration: 200 }}
+            out:fly={{ x: -themeDirection * 50, duration: 200 }}
+          >
+            {themes[themeIndex]}
+          </span>
+        {/key}
+      </div>
+
+      <span class="text-xl">▶</span>
+    </button>
 
     {#if $useMaxWidth}
-      <div class="flex flex-row space-x-7">
-        {#each [{ label: "Full Width", value: TextWidth.Full }, { label: "3/4 Width", value: TextWidth.Medium }, { label: "1/2 Width", value: TextWidth.Low }] as { label, value }}
-          <button
-            on:click={() => onSetWidth(value)}
-            class="w-full min-w-[5rem] px-6 py-4 text-lg font-medium
-                   bg-gray-800 text-neutral-50 dark:bg-gray-50 dark:text-neutral-900
-                   rounded-lg shadow hover:shadow-md transition
-                   {$textWidthStore === value
-              ? 'ring-2 ring-offset-2 ring-indigo-500'
-              : ''}"
-          >
-            {label}
-          </button>
-        {/each}
-      </div>
+      <button
+        on:click={onWidthClick}
+        class="w-full min-w-[12rem] flex flex-nowrap items-center justify-between
+               px-6 py-4 text-lg font-medium
+               bg-gray-800 text-neutral-50 dark:bg-gray-50 dark:text-neutral-900
+               rounded-lg shadow hover:shadow-md transition-colors duration-200"
+        aria-label="Cycle text widths"
+      >
+        <span class="text-xl">◀</span>
+
+        <div
+          class="flex-1 text-center overflow-hidden whitespace-nowrap"
+          style="min-width: 7rem;"
+        >
+          {#key widths[widthIndex].value}
+            <span
+              class="inline-block w-full capitalize"
+              in:fly={{ x: widthDirection * 50, duration: 200 }}
+              out:fly={{ x: -widthDirection * 50, duration: 200 }}
+            >
+              {widths[widthIndex].label}
+            </span>
+          {/key}
+        </div>
+
+        <span class="text-xl">▶</span>
+      </button>
     {/if}
   </nav>
 </div>

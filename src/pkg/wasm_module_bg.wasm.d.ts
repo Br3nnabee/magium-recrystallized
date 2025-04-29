@@ -1,16 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
-export const __wasm_start: () => void;
 export const __wbg_cyoagame_free: (a: number, b: number) => void;
 export const cyoagame_new: (a: number, b: number) => any;
 export const cyoagame_chunk_ids: (a: number) => any;
-export const cyoagame_get_root_node: (a: number) => any;
-export const cyoagame_get_content: (a: number, b: number) => any;
-export const cyoagame_get_node_content: (a: number, b: number) => any;
-export const cyoagame_get_edges: (a: number, b: number) => any;
-export const cyoagame_get_edge_label: (a: number, b: number) => any;
-export const cyoagame_get_edge_destination: (a: number, b: number) => any;
+export const cyoagame_load_node_full: (a: number, b: number) => any;
+export const cyoagame_load_root_node_full: (a: number) => any;
+export const __wasm_start: () => void;
 export const rust_zstd_wasm_shim_qsort: (a: number, b: number, c: number, d: number) => void;
 export const rust_zstd_wasm_shim_malloc: (a: number) => number;
 export const rust_zstd_wasm_shim_memcmp: (a: number, b: number, c: number) => number;
@@ -26,6 +22,6 @@ export const __wbindgen_free: (a: number, b: number, c: number) => void;
 export const __wbindgen_malloc: (a: number, b: number) => number;
 export const __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
 export const __wbindgen_export_6: WebAssembly.Table;
-export const closure72_externref_shim: (a: number, b: number, c: any) => void;
-export const closure84_externref_shim: (a: number, b: number, c: any, d: any) => void;
+export const closure64_externref_shim: (a: number, b: number, c: any) => void;
+export const closure77_externref_shim: (a: number, b: number, c: any, d: any) => void;
 export const __wbindgen_start: () => void;
