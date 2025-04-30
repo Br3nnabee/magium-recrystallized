@@ -263,7 +263,7 @@
               Contributing Guide
             </a>
             <a
-              href="https://github.com/Br3nnabee/magium-recrystallized"
+              href="https://github.com/Br3nnabee/magium-recrystallized/blob/main/CONTRIBUTING.md"
               target="_blank"
               class="px-6 py-3 font-semibold text-[#D69E2E] border-2 border-[#D69E2E]
               rounded-full text-center transition-colors hover:bg-[#D69E2E] hover:text-[#3F1D1D]"
