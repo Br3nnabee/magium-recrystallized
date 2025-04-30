@@ -76,7 +76,7 @@ We welcome contributions! Here's how you can help:
 5. Open a Pull Request.
 
 Please follow our coding guidelines and check for open issues before starting major changes.  
-See the [CONTRIBUTING.md](.github/CONTRIBUTING.md) file for detailed instructions and standards.
+See the [CONTRIBUTING.md](CONTRIBUTING.md) file for detailed instructions and standards.
 
 ## License
 
