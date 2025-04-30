@@ -7,7 +7,6 @@ A community recreation & continuation of Magium, a popular choose-your-own-adven
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Configuration](#configuration)
 - [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
