@@ -3,6 +3,7 @@
 A community recreation & continuation of Magium, a popular choose-your-own-adventure (CYOA) game by author Cristian Mihailescu.
 
 ## Table of Contents
+
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
@@ -12,9 +13,11 @@ A community recreation & continuation of Magium, a popular choose-your-own-adven
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
+
 Magium Recrystallized revives the highly loved narrative-driven experience, allowing players to create and explore meaningful decisions in a fantasy world. Driven by its passionate community, this version not only aims to faithfully recreate the original experience, but modernize its platform and continue the story past the 3 books originally written.
 
 ## Features
+
 - **Engaging Narrative:** Experience deep, immersive storytelling with branching plotlines.
 - **Community Created Content:** Regular updates made by the writing team continuing the story of Magium.
 - **Cross-Platform:** Packaged via Tauri, supporting most desktop and mobile platforms with fast performance and low footprint.
@@ -47,7 +50,8 @@ npm run tauri build
 ```
 
 ## Usage
-To launch the development version of *Magium Recrystallized*:
+
+To launch the development version of _Magium Recrystallized_:
 
 ```bash
 # Start development server with Tauri
@@ -62,6 +66,7 @@ npm run tauri build
 ```
 
 ## Contributing
+
 We welcome contributions! Here's how you can help:
 
 1. Fork the repository.
@@ -71,12 +76,14 @@ We welcome contributions! Here's how you can help:
 5. Open a Pull Request.
 
 Please follow our coding guidelines and check for open issues before starting major changes.  
-See the [CONTRIBUTING.md](CONTRIBUTING.md) file for detailed instructions and standards.
+See the [CONTRIBUTING.md](.github/CONTRIBUTING.md) file for detailed instructions and standards.
 
 ## License
+
 Distributed under the AGPL 3.0 License. See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgments
+
 - Cristian Mihailescu – original creator of Magium
 - Magium Recrystallized contributors – supporting and improving the app
 - Writer Team - continuing the story of Magium
