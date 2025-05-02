@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* This simply exists to set custom themes */
+
 :root {
   /* Default Tailwind gray (cool/blueish) */
   --color-gray-50: oklch(0.985 0.002 247.839);

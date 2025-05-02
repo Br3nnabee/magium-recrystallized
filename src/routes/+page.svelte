@@ -255,7 +255,7 @@
           </p>
           <div class="flex flex-col gap-4">
             <a
-              href=""
+              href="https://github.com/Br3nnabee/magium-recrystallized/blob/main/CONTRIBUTING.md"
               target="_blank"
               class="px-6 py-3 bg-[#D69E2E] text-[#3F1D1D] font-semibold rounded-full
               text-center transition-colors hover:bg-[#b9891f]"
@@ -263,7 +263,7 @@
               Contributing Guide
             </a>
             <a
-              href="https://github.com/Br3nnabee/magium-recrystallized/blob/main/CONTRIBUTING.md"
+              href="https://github.com/Br3nnabee/magium-recrystallized"
               target="_blank"
               class="px-6 py-3 font-semibold text-[#D69E2E] border-2 border-[#D69E2E]
               rounded-full text-center transition-colors hover:bg-[#D69E2E] hover:text-[#3F1D1D]"
