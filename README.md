@@ -9,6 +9,7 @@ A community recreation & continuation of Magium, a popular choose-your-own-adven
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
+- [Documentation](#documentation)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 
@@ -77,6 +78,10 @@ We welcome contributions! Here's how you can help:
 
 Please follow our coding guidelines and check for open issues before starting major changes.  
 See the [CONTRIBUTING.md](CONTRIBUTING.md) file for detailed instructions and standards.
+
+## Documentation
+
+Unfortunately, due to the complexity associated with this project and the currently sole developer focusing on simply outputting a finished project ASAP, integrated documentation is not available. That said, comments are included as much as possible, and for the wasm module decent documentation can be easily viewed via `cargo doc --document-private-items --open`. Once more people begin contributing, there will be a concerted effort made to improve the documentation to the point that it is highly browsable, but for the time being this will have to suffice.
 
 ## License
 
