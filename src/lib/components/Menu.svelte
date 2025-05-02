@@ -1,3 +1,8 @@
+<!--
+  Svelte component script for the in-game menu overlay.
+  Manages mounting/unmounting behaviors, responsive width measurement,
+  focus trapping, scroll locking, and menu navigation logic.
+-->
 <script lang="ts">
   import { onMount, onDestroy, tick } from "svelte";
   import { fade, fly } from "svelte/transition";
@@ -16,31 +21,50 @@
   import AboutPanel from "./AboutPanel.svelte";
   import { useMaxWidth } from "$lib/stores/displaysettings";
 
+  // Reference to the menu container for width measurement
   let menuEl: HTMLElement;
+  // Current measured width of the menu panel
   let menuWidth = 0;
 
+  /**
+   * Measure the rendered menu width after the DOM updates.
+   * Uses Svelte's tick() to wait for the next microtask.
+   */
   async function measureMenu() {
     await tick();
     if (menuEl) menuWidth = menuEl.getBoundingClientRect().width;
   }
 
+  // Lock page scroll when menu is open
   $: document.body.style.overflow =
     $uiState.primary === PrimaryState.Menu ? "hidden" : "";
 
+  /**
+   * Global keyup handler for menu shortcuts and Escape-to-close.
+   * @param e - KeyboardEvent
+   */
   function onKeyup(e: KeyboardEvent) {
     /*…*/
   }
 
+  // Set up event listeners on component mount
   onMount(() => {
     window.addEventListener("resize", measureMenu, { passive: true });
     window.addEventListener("keyup", onKeyup);
   });
 
+  // Clean up event listeners on component destroy
   onDestroy(() => {
     window.removeEventListener("resize", measureMenu);
     window.removeEventListener("keyup", onKeyup);
   });
 
+  /**
+   * Action to toggle scroll locking on an element.
+   * Binds to element lifecycle: update toggles lock, destroy resets.
+   * @param node - target HTMLElement
+   * @param locked - whether to lock scrolling
+   */
   function scrollLock(node: HTMLElement, locked: boolean) {
     const set = (val: boolean) =>
       (document.body.style.overflow = val ? "hidden" : "");
@@ -55,25 +79,39 @@
     };
   }
 
+  /**
+   * Action to trap focus within a node while mounted.
+   * Restores previous focus on destroy.
+   * @param node - container HTMLElement to trap focus in
+   */
   function trapFocus(node: HTMLElement) {
+    // Save current focused element to restore later
     const prev = document.activeElement as HTMLElement | null;
     node.focus({ preventScroll: true });
+
+    // Selector for all focusable elements
     const sel =
       'a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])';
     let focusables: HTMLElement[] = [];
     const refresh = () =>
       (focusables = Array.from(node.querySelectorAll<HTMLElement>(sel)));
     refresh();
+
+    /**
+     * Keydown handler to cycle focus on Tab/Shift+Tab
+     */
     function onKey(e: KeyboardEvent) {
       if (e.key !== "Tab") return;
       refresh();
       const idx = focusables.indexOf(document.activeElement as HTMLElement);
       if (e.shiftKey) {
+        // Loop to last element if at start
         if (idx === 0 || document.activeElement === node) {
           e.preventDefault();
           focusables[focusables.length - 1]?.focus();
         }
       } else {
+        // Loop to first element if at end
         if (idx === focusables.length - 1 || document.activeElement === node) {
           e.preventDefault();
           focusables[0]?.focus();
@@ -81,16 +119,20 @@
       }
     }
     node.addEventListener("keydown", onKey);
+
     return {
       destroy() {
         node.removeEventListener("keydown", onKey);
+        // Restore original focus
         prev?.focus();
       },
     };
   }
 
+  // Re-measure menu whenever it opens
   $: if ($uiState.primary === PrimaryState.Menu) measureMenu();
 
+  /** Example menu actions **/
   function quicksave() {
     console.log("Quicksave");
   }
@@ -98,6 +140,7 @@
     console.log("Load last checkpoint");
   }
 
+  // Definition of menu buttons and their actions
   interface MenuButton {
     label: string;
     action: () => void;
@@ -105,10 +148,7 @@
   const buttons: MenuButton[] = [
     { label: "Quicksave", action: quicksave },
     { label: "Last Checkpoint", action: loadLastCheckpoint },
-    {
-      label: "Achievements",
-      action: () => openMenu(MenuSubstate.Achievements),
-    },
+    { label: "Achievements", action: () => openMenu(MenuSubstate.Achievements) },
     { label: "Saves", action: () => openMenu(MenuSubstate.Saves) },
     { label: "Settings", action: () => openMenu(MenuSubstate.Settings) },
     { label: "About", action: () => openMenu(MenuSubstate.About) },
