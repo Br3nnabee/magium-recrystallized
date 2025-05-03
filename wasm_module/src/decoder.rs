@@ -701,47 +701,18 @@ impl CyoaGame {
     /// - `Err(GameError::Parse(_))`: If the TLV structure is malformed.
     fn parse_node_content_cid(data: &[u8]) -> Result<[u8; 3], GameError> {
         let mut c = Cursor::new(data);
-        let id_len = c
-            .read_u16::<LittleEndian>()
-            .map_err(|_| GameError::Parse("Read id_len"))?;
-        c.seek(SeekFrom::Current(id_len as i64))
-            .map_err(|_| GameError::Parse("Seek id"))?;
-        let dl = c.read_u8().map_err(|_| GameError::Parse("Read desc len"))?;
-        c.seek(SeekFrom::Current(dl as i64))
-            .map_err(|_| GameError::Parse("Seek desc"))?;
-        let tag_cnt = c
-            .read_u16::<LittleEndian>()
-            .map_err(|_| GameError::Parse("Read tag cnt"))?;
-        for _ in 0..tag_cnt {
-            let k = c.read_u8().map_err(|_| GameError::Parse("Read key len"))?;
-            c.seek(SeekFrom::Current(k as i64))
-                .map_err(|_| GameError::Parse("Seek key"))?;
-            let v = c.read_u8().map_err(|_| GameError::Parse("Read val len"))?;
-            c.seek(SeekFrom::Current(v as i64))
-                .map_err(|_| GameError::Parse("Seek val"))?;
-        }
-        let ef = c
-            .read_u16::<LittleEndian>()
-            .map_err(|_| GameError::Parse("Read ext cnt"))?;
-        c.seek(SeekFrom::Current((ef as i64) * 12))
-            .map_err(|_| GameError::Parse("Seek ext"))?;
-        let out_cnt = c
-            .read_u16::<LittleEndian>()
-            .map_err(|_| GameError::Parse("Read out cnt"))?;
-        c.seek(SeekFrom::Current((out_cnt as i64) * 3))
-            .map_err(|_| GameError::Parse("Seek outs"))?;
-        let tr_cnt = c
-            .read_u16::<LittleEndian>()
-            .map_err(|_| GameError::Parse("Read trans cnt"))?;
+        Self::skip_node_header_fields(&mut c)?;
+
+        let tr_cnt = c.read_u16::<LittleEndian>().map_err(|_| GameError::Parse("Read translation count"))?;
         if tr_cnt == 0 {
-            return Err(GameError::Parse("No translations"));
+            return Err(GameError::Parse("No translations available"));
         }
-        let lang_len = c.read_u8().map_err(|_| GameError::Parse("Read lang len"))?;
-        c.seek(SeekFrom::Current(lang_len as i64))
-            .map_err(|_| GameError::Parse("Seek lang"))?;
-        let mut cid = [0; 3];
-        c.read_exact(&mut cid)
-            .map_err(|_| GameError::Parse("Read cid"))?;
+
+        let lang_len = c.read_u8().map_err(|_| GameError::Parse("Read lang length"))?;
+        c.seek(SeekFrom::Current(lang_len as i64)).map_err(|_| GameError::Parse("Skip lang bytes"))?;
+
+        let mut cid = [0u8; 3];
+        c.read_exact(&mut cid).map_err(|_| GameError::Parse("Read translation CID"))?;
         Ok(cid)
     }
 
@@ -757,43 +728,19 @@ impl CyoaGame {
     /// - `Err(GameError::Parse(_))`: On malformed TLV.
     fn parse_node_edges_ids(data: &[u8]) -> Result<Vec<[u8; 3]>, GameError> {
         let mut c = Cursor::new(data);
-        let id_len = c
-            .read_u16::<LittleEndian>()
-            .map_err(|_| GameError::Parse("Read id_len"))?;
-        c.seek(SeekFrom::Current(id_len as i64))
-            .map_err(|_| GameError::Parse("Seek id"))?;
-        let dl = c.read_u8().map_err(|_| GameError::Parse("Read desc len"))?;
-        c.seek(SeekFrom::Current(dl as i64))
-            .map_err(|_| GameError::Parse("Seek desc"))?;
-        let tag_cnt = c
-            .read_u16::<LittleEndian>()
-            .map_err(|_| GameError::Parse("Read tag cnt"))?;
-        for _ in 0..tag_cnt {
-            let k = c.read_u8().map_err(|_| GameError::Parse("Read key len"))?;
-            c.seek(SeekFrom::Current(k as i64))
-                .map_err(|_| GameError::Parse("Seek key"))?;
-            let v = c.read_u8().map_err(|_| GameError::Parse("Read val len"))?;
-            c.seek(SeekFrom::Current(v as i64))
-                .map_err(|_| GameError::Parse("Seek val"))?;
-        }
-        let ef = c
-            .read_u16::<LittleEndian>()
-            .map_err(|_| GameError::Parse("Read ext cnt"))?;
-        c.seek(SeekFrom::Current((ef as i64) * 12))
-            .map_err(|_| GameError::Parse("Seek ext"))?;
-        let out_cnt = c
-            .read_u16::<LittleEndian>()
-            .map_err(|_| GameError::Parse("Read out cnt"))?;
-        let mut cids = Vec::with_capacity(out_cnt as usize);
-        for _ in 0..out_cnt {
-            let mut cid = [0; 3];
-            c.read_exact(&mut cid)
-                .map_err(|_| GameError::Parse("Read cid"))?;
-            cids.push(cid);
-        }
-        Ok(cids)
-    }
+        Self::skip_node_header_fields(&mut c)?;
 
+        let out_cnt = c.read_u16::<LittleEndian>().map_err(|_| GameError::Parse("Read outgoing count"))?;
+        let mut ids = Vec::with_capacity(out_cnt as usize);
+
+        for _ in 0..out_cnt {
+            let mut cid = [0u8; 3];
+            c.read_exact(&mut cid).map_err(|_| GameError::Parse("Read outgoing CID"))?;
+            ids.push(cid);
+        }
+
+        Ok(ids)
+    }
     /// Reads a UTF-8 text string from a `ChunkType::Content` payload.
     ///
     /// # Parameters
@@ -862,29 +809,120 @@ impl CyoaGame {
         Ok((label_cid, dest_cid))
     }
 
-    fn parse_node_content_seq (data: &[u8]) -> Result<Vec<ContentEntry>, GameError> {
+    /// Parse the content_sequence entries from a Node payload slice.
+    ///
+    /// Uses `skip_node_header_fields` to position the cursor, then reads:
+    /// - u16: number of sequence entries
+    /// - for each entry:
+    ///   - u8: has_guard flag
+    ///   - if true, u32 func_id, u32 arg_off, u32 arg_len; else skip 12 bytes
+    ///   - 3-byte content_cid
+    ///
+    /// # Parameters
+    ///
+    /// - `data`: byte slice of a decompressed Node chunk payload
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(Vec<ContentEntry>)` with all parsed sequence entries
+    /// - `Err(GameError::Parse(_))` on any malformed data or I/O error
+    fn parse_node_content_seq(data: &[u8]) -> Result<Vec<ContentEntry>, GameError> {
         let mut c = Cursor::new(data);
+        Self::skip_node_header_fields(&mut c)?;
 
         let seq_cnt = c
             .read_u16::<LittleEndian>()
             .map_err(|_| GameError::Parse("Read content_seq count"))?;
         let mut out = Vec::with_capacity(seq_cnt as usize);
+
         for _ in 0..seq_cnt {
-            let has = c.read_u8().map_err(|_| GameError::Parse("Read has_guard"))? != 0;
+            let has = c
+                .read_u8()
+                .map_err(|_| GameError::Parse("Read has_guard"))? != 0;
             let (fid, off, len) = if has {
-                let fid = c.read_u32::<LittleEndian>().map_err(|_| GameError::Parse("Read func_id"))?;
-                let off = c.read_u32::<LittleEndian>().map_err(|_| GameError::Parse("Read arg_off"))?;
-                let len = c.read_u32::<LittleEndian>().map_err(|_| GameError::Parse("Read arg_len"))?;
+                let fid = c
+                    .read_u32::<LittleEndian>()
+                    .map_err(|_| GameError::Parse("Read func_id"))?;
+                let off = c
+                    .read_u32::<LittleEndian>()
+                    .map_err(|_| GameError::Parse("Read arg_off"))?;
+                let len = c
+                    .read_u32::<LittleEndian>()
+                    .map_err(|_| GameError::Parse("Read arg_len"))?;
                 (fid, off, len)
             } else {
-                c.seek(SeekFrom::Current(12)).map_err(|_| GameError::Parse("Skip dummy"))?;
-                (0,0,0)
+                c.seek(SeekFrom::Current(12))
+                    .map_err(|_| GameError::Parse("Skip dummy guard fields"))?;
+                (0, 0, 0)
             };
-            let mut cid = [0u8;3];
-            c.read_exact(&mut cid).map_err(|_| GameError::Parse("Read content_cid"))?;
-            out.push(ContentEntry { has_guard: has, func_id: fid, arg_off: off, arg_len: len, content_cid: cid })
+            let mut cid = [0u8; 3];
+            c.read_exact(&mut cid)
+                .map_err(|_| GameError::Parse("Read content_cid"))?;
+            out.push(ContentEntry {
+                has_guard: has,
+                func_id: fid,
+                arg_off: off,
+                arg_len: len,
+                content_cid: cid,
+            });
         }
+
         Ok(out)
+    }
+    
+    /// Skip over common Node payload fields up to the content_sequence.
+    ///
+    /// Advances the cursor past:
+    /// 1. Node ID (u16 length + bytes)
+    /// 2. Default language (u8 length + bytes)
+    /// 3. Tags (u16 count + repeated key/value lengths + bytes)
+    /// 4. Entry funcs (u16 count + repeated u32 func_id + u32 arg_off + u32 arg_len)
+    /// 5. Outgoing edges (u16 count + repeated 3-byte IDs)
+    /// 6. Translations (u16 count + repeated u8 lang_len + bytes + 3-byte ID)
+    ///
+    /// # Parameters
+    ///
+    /// - `c`: Cursor over a Node chunk payload implementing `Read + Seek`.
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(())` on success, with the cursor positioned at the start of the content_sequence.
+    /// - `Err(GameError::Parse(_))` if any read or seek operation fails.
+    fn skip_node_header_fields<R: Read + Seek>(c: &mut R) -> Result<(), GameError> {
+        // Skip Node ID
+        let id_len = c.read_u16::<LittleEndian>().map_err(|_| GameError::Parse("Skip ID length"))?;
+        c.seek(SeekFrom::Current(id_len as i64)).map_err(|_| GameError::Parse("Skip ID"))?;
+
+        // Skip default language
+        let dl = c.read_u8().map_err(|_| GameError::Parse("Skip default_language length"))?;
+        c.seek(SeekFrom::Current(dl as i64)).map_err(|_| GameError::Parse("Skip default_language"))?;
+
+        // Skip tags
+        let tag_cnt = c.read_u16::<LittleEndian>().map_err(|_| GameError::Parse("Skip tag count"))?;
+        for _ in 0..tag_cnt {
+            let k = c.read_u8().map_err(|_| GameError::Parse("Skip tag key length"))?;
+            c.seek(SeekFrom::Current(k as i64)).map_err(|_| GameError::Parse("Skip tag key"))?;
+            let v = c.read_u8().map_err(|_| GameError::Parse("Skip tag value length"))?;
+            c.seek(SeekFrom::Current(v as i64)).map_err(|_| GameError::Parse("Skip tag value"))?;
+        }
+
+        // Skip entry functions
+        let ef = c.read_u16::<LittleEndian>().map_err(|_| GameError::Parse("Skip entry_funcs count"))?;
+        c.seek(SeekFrom::Current((ef as i64) * (4 + 4 + 4))).map_err(|_| GameError::Parse("Skip entry_funcs"))?;
+
+        // Skip outgoing edges
+        let out_cnt = c.read_u16::<LittleEndian>().map_err(|_| GameError::Parse("Skip outgoing count"))?;
+        c.seek(SeekFrom::Current((out_cnt as i64) * 3)).map_err(|_| GameError::Parse("Skip outgoing IDs"))?;
+
+        // Skip translations
+        let tr_cnt = c.read_u16::<LittleEndian>().map_err(|_| GameError::Parse("Skip translations count"))?;
+        for _ in 0..tr_cnt {
+            let lang_len = c.read_u8().map_err(|_| GameError::Parse("Skip translation lang length"))?;
+            c.seek(SeekFrom::Current(lang_len as i64)).map_err(|_| GameError::Parse("Skip translation lang"))?;
+            c.seek(SeekFrom::Current(3)).map_err(|_| GameError::Parse("Skip translation CID"))?;
+        }
+
+        Ok(())
     }
 
     /// Fetches the entire file at `url` without using Range requests.
