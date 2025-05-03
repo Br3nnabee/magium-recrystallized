@@ -27,6 +27,7 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Headers, RequestInit, RequestMode, Response, Window, window};
 use zstd_safe::decompress;
+use crate::wasmtable::run_guard;
 
 // -- Type-safe enums and structured errors --
 
@@ -108,12 +109,12 @@ struct IndexEntry {
 }
 
 #[derive(Clone, Debug)]
-struct ContentEntry {
-    has_guard: bool,
-    func_id: u32,
-    arg_off: u32,
-    arg_len: u32,
-    content_cid: [u8; 3],
+pub struct ContentEntry {
+    /// If present, the guard consists of the function ID (u32)
+    /// and the raw guard‐bytes that follow in the TLV.
+    pub guard: Option<(u32, Vec<u8>)>,
+    /// The 3‐byte ID of the content chunk to fetch next.
+    pub content_id: [u8; 3],
 }
 
 /// Represents one outgoing edge from a node.
@@ -301,73 +302,90 @@ impl CyoaGame {
         }
         let raw_node = self.get_raw_chunk(entry).await?;
 
-        // 2) Parse TLV and decompress
-        let (_t, _id, flags, comp_len, un_len, hdr_len) =
+        // 2) Parse TLV header and decompress node payload
+        let (_t, _id, flags, comp_len, un_len_opt, hdr_len) =
             Self::parse_tlv_header(&raw_node).map_err(JsValue::from)?;
         let payload = Self::decompress_payload(
             flags,
             &raw_node[hdr_len..hdr_len + comp_len as usize],
-            un_len,
+            un_len_opt,
         )
         .map_err(JsValue::from)?;
 
-        // 3) Extract content & edge CIDs
-        let content_cid = Self::parse_node_content_cid(&payload).map_err(JsValue::from)?;
-        let edge_cids = Self::parse_node_edges_ids(&payload).map_err(JsValue::from)?;
+        // 3) Parse content sequence entries (with guards)
+        let seq_entries =
+            Self::parse_node_content_seq(&payload).map_err(JsValue::from)?; // Vec<ContentEntry>
 
-        // 4) Locate index entries
-        let content_entry = self
-            .index
-            .iter()
-            .find(|e| e.chunk_type == ChunkType::Content && e.chunk_id == content_cid)
-            .ok_or(GameError::Parse("content chunk not found"))
-            .map_err(JsValue::from)?;
-        let edge_entries: Vec<_> = edge_cids
-            .iter()
-            .filter_map(|cid| {
-                self.index
-                    .iter()
-                    .find(|e| e.chunk_type == ChunkType::Edge && &e.chunk_id == cid)
-            })
-            .collect();
-
-        // 5) Build ranges (merge inside fetch_ranges)
-        let mut ranges = Vec::with_capacity(1 + edge_entries.len());
-        ranges.push((
-            content_entry.offset,
-            content_entry.offset + content_entry.length as u64 - 1,
-        ));
-        for e in &edge_entries {
-            ranges.push((e.offset, e.offset + e.length as u64 - 1));
+        // 4) Run guards and collect content IDs to include
+        let mut wanted_ids = Vec::new();
+        for entry in seq_entries {
+            if let Some((func_id, guard_bytes)) = entry.guard {
+                if !run_guard(func_id, &guard_bytes) {
+                    continue; // skip this segment
+                }
+            }
+            wanted_ids.push(entry.content_id);
         }
 
-        // 6) Fetch all parts in parallel (fetch_ranges merges)
-        let win = window().ok_or(GameError::Other("no window".to_string()))?;
-        let parts = self.fetch_ranges(&win, &self.url, &ranges).await?;
+        // 5) Find index entries for the surviving content IDs
+        let content_indexes: Vec<&IndexEntry> = wanted_ids
+            .iter()
+            .map(|cid| {
+                self.index
+                    .iter()
+                    .find(|e| e.chunk_type == ChunkType::Content && e.chunk_id == *cid)
+                    .ok_or(GameError::Parse("content chunk not found"))
+            })
+            .collect::<Result<_, _>>()
+            .map_err(JsValue::from)?;
 
-        // 7) Parse node content text
-        let content_text = {
-            let raw_c = &parts[0];
-            let (_t2, _i2, f2, c2, u2, h2) =
-                Self::parse_tlv_header(raw_c).map_err(JsValue::from)?;
-            let pl = Self::decompress_payload(f2, &raw_c[h2..h2 + c2 as usize], u2)
+        // 6) Fetch all content chunks in parallel
+        let raw_contents = try_join_all(content_indexes.iter().map(|e| self.get_raw_chunk(e)))
+            .await
+            .map_err(JsValue::from)?;
+
+        // 7) Decompress & parse each content text, concatenate
+        let mut full_text = String::new();
+        for raw_c in raw_contents {
+            let (_t2, _i2, f2, c2, u2_opt, h2) =
+                Self::parse_tlv_header(&raw_c).map_err(JsValue::from)?;
+            let pl = Self::decompress_payload(f2, &raw_c[h2..h2 + c2 as usize], u2_opt)
                 .map_err(JsValue::from)?;
-            Self::parse_content_text(&pl).map_err(JsValue::from)?
-        };
+            let txt = Self::parse_content_text(&pl).map_err(JsValue::from)?;
+            full_text.push_str(&txt);
+        }
 
-        // 8) Batch-parse edge metas
+        // 8) Edge parsing (identical to original implementation)
+        //    a) extract edge CIDs
+        let edge_cids =
+            Self::parse_node_edges_ids(&payload).map_err(JsValue::from)?;
+        //    b) locate edge index entries
+        let edge_entries: Vec<&IndexEntry> = edge_cids
+            .iter()
+            .map(|cid| {
+                self.index
+                    .iter()
+                    .find(|e| e.chunk_type == ChunkType::Edge && e.chunk_id == *cid)
+                    .ok_or(GameError::Parse("edge chunk not found"))
+            })
+            .collect::<Result<_, _>>()
+            .map_err(JsValue::from)?;
+        //    c) fetch all edge chunks
+        let raw_edges = try_join_all(edge_entries.iter().map(|e| self.get_raw_chunk(e)))
+            .await
+            .map_err(JsValue::from)?;
+        //    d) parse edge metadata into (label_cid, dest_cid)
         let mut edge_meta = Vec::with_capacity(edge_entries.len());
-        for raw_e in parts.iter().skip(1) {
-            let (_t3, _i3, f3, c3, u3, h3) =
-                Self::parse_tlv_header(raw_e).map_err(JsValue::from)?;
-            let pl = Self::decompress_payload(f3, &raw_e[h3..h3 + c3 as usize], u3)
+        for raw_e in raw_edges {
+            let (_t3, _i3, f3, c3, u3_opt, h3) =
+                Self::parse_tlv_header(&raw_e).map_err(JsValue::from)?;
+            let pl = Self::decompress_payload(f3, &raw_e[h3..h3 + c3 as usize], u3_opt)
                 .map_err(JsValue::from)?;
             let (label_cid, dest_cid) =
                 Self::parse_edge_label_dest_cids(&pl).map_err(JsValue::from)?;
             edge_meta.push((label_cid, dest_cid));
         }
-
-        // 9) Fetch and parse labels
+        //    e) fetch all label content chunks
         let label_entries: Vec<&IndexEntry> = edge_meta
             .iter()
             .map(|(lc, _)| {
@@ -376,17 +394,17 @@ impl CyoaGame {
                     .find(|e| e.chunk_type == ChunkType::Content && &e.chunk_id == lc)
                     .ok_or(GameError::Parse("label content not found"))
             })
-            .collect::<Result<_, GameError>>()
+            .collect::<Result<_, _>>()
             .map_err(JsValue::from)?;
-
-        let raw_labels = try_join_all(label_entries.iter().map(|e| self.get_raw_chunk(e))).await?;
-
-        // 10) Build EdgeOutput list
-        let mut edges_out = Vec::with_capacity(edge_entries.len());
+        let raw_labels = try_join_all(label_entries.iter().map(|e| self.get_raw_chunk(e)))
+            .await
+            .map_err(JsValue::from)?;
+        //    f) build EdgeOutput list
+        let mut edges_out = Vec::with_capacity(edge_meta.len());
         for (raw_lbl, (_, dest_cid)) in raw_labels.into_iter().zip(edge_meta) {
-            let (_t4, _i4, f4, c4, u4, h4) =
+            let (_t4, _i4, f4, c4, u4_opt, h4) =
                 Self::parse_tlv_header(&raw_lbl).map_err(JsValue::from)?;
-            let pl = Self::decompress_payload(f4, &raw_lbl[h4..h4 + c4 as usize], u4)
+            let pl = Self::decompress_payload(f4, &raw_lbl[h4..h4 + c4 as usize], u4_opt)
                 .map_err(JsValue::from)?;
             let label_text = Self::parse_content_text(&pl).map_err(JsValue::from)?;
             let dest_idx = self
@@ -401,10 +419,10 @@ impl CyoaGame {
             });
         }
 
-        // 11) Serialize and return
+        // 9) Serialize and return original NodeOutput shape
         let node = NodeOutput {
-            content: content_text,
-            edges: edges_out,
+            content: full_text,
+            edges:   edges_out,
         };
         to_value(&node).map_err(|e| JsValue::from_str(&format!("{:?}", e)))
     }
@@ -726,21 +744,54 @@ impl CyoaGame {
     ///
     /// - `Ok(Vec<[u8;3]>)`: All referenced edge chunk IDs.
     /// - `Err(GameError::Parse(_))`: On malformed TLV.
-    fn parse_node_edges_ids(data: &[u8]) -> Result<Vec<[u8; 3]>, GameError> {
+        fn parse_node_edges_ids(data: &[u8]) -> Result<Vec<[u8; 3]>, GameError> {
         let mut c = Cursor::new(data);
-        Self::skip_node_header_fields(&mut c)?;
 
-        let out_cnt = c.read_u16::<LittleEndian>().map_err(|_| GameError::Parse("Read outgoing count"))?;
+        // Skip Node ID
+        let id_len = c.read_u16::<LittleEndian>()
+            .map_err(|_| GameError::Parse("Read ID length"))?;
+        c.seek(SeekFrom::Current(id_len as i64))
+            .map_err(|_| GameError::Parse("Skip ID"))?;
+
+        // Skip default language
+        let dl = c.read_u8()
+            .map_err(|_| GameError::Parse("Read default language length"))?;
+        c.seek(SeekFrom::Current(dl as i64))
+            .map_err(|_| GameError::Parse("Skip default language"))?;
+
+        // Skip tags
+        let tag_cnt = c.read_u16::<LittleEndian>()
+            .map_err(|_| GameError::Parse("Read tag count"))?;
+        for _ in 0..tag_cnt {
+            let k = c.read_u8()
+                .map_err(|_| GameError::Parse("Read tag key length"))?;
+            c.seek(SeekFrom::Current(k as i64))
+                .map_err(|_| GameError::Parse("Skip tag key"))?;
+            let v = c.read_u8()
+                .map_err(|_| GameError::Parse("Read tag value length"))?;
+            c.seek(SeekFrom::Current(v as i64))
+                .map_err(|_| GameError::Parse("Skip tag value"))?;
+        }
+
+        // Skip entry functions
+        let ef = c.read_u16::<LittleEndian>()
+            .map_err(|_| GameError::Parse("Read entry_funcs count"))?;
+        c.seek(SeekFrom::Current((ef as i64) * 12))
+            .map_err(|_| GameError::Parse("Skip entry_funcs"))?;
+
+        // Now read outgoing edges
+        let out_cnt = c.read_u16::<LittleEndian>()
+            .map_err(|_| GameError::Parse("Read outgoing count"))?;
         let mut ids = Vec::with_capacity(out_cnt as usize);
-
         for _ in 0..out_cnt {
             let mut cid = [0u8; 3];
-            c.read_exact(&mut cid).map_err(|_| GameError::Parse("Read outgoing CID"))?;
+            c.read_exact(&mut cid)
+                .map_err(|_| GameError::Parse("Read outgoing CID"))?;
             ids.push(cid);
         }
 
         Ok(ids)
-    }
+    }    
     /// Reads a UTF-8 text string from a `ChunkType::Content` payload.
     ///
     /// # Parameters
@@ -828,42 +879,57 @@ impl CyoaGame {
     /// - `Err(GameError::Parse(_))` on any malformed data or I/O error
     fn parse_node_content_seq(data: &[u8]) -> Result<Vec<ContentEntry>, GameError> {
         let mut c = Cursor::new(data);
+        // Skip all the common node fields
         Self::skip_node_header_fields(&mut c)?;
 
+        // How many sequence entries?
         let seq_cnt = c
             .read_u16::<LittleEndian>()
             .map_err(|_| GameError::Parse("Read content_seq count"))?;
         let mut out = Vec::with_capacity(seq_cnt as usize);
 
         for _ in 0..seq_cnt {
+            // Read the flag byte
             let has = c
                 .read_u8()
                 .map_err(|_| GameError::Parse("Read has_guard"))? != 0;
-            let (fid, off, len) = if has {
-                let fid = c
+
+            // Prepare to capture guard if present
+            let guard = if has {
+                // Read the TLV‐declared func_id, arg_off, arg_len
+                let func_id = c
                     .read_u32::<LittleEndian>()
                     .map_err(|_| GameError::Parse("Read func_id"))?;
-                let off = c
+                let arg_off = c
                     .read_u32::<LittleEndian>()
-                    .map_err(|_| GameError::Parse("Read arg_off"))?;
-                let len = c
+                    .map_err(|_| GameError::Parse("Read arg_off"))? as usize;
+                let arg_len = c
                     .read_u32::<LittleEndian>()
-                    .map_err(|_| GameError::Parse("Read arg_len"))?;
-                (fid, off, len)
+                    .map_err(|_| GameError::Parse("Read arg_len"))? as usize;
+
+                // Extract the guard bytes from the *original* payload slice
+                // (they aren’t in‐line after the TLV header, but pointed to by arg_off/arg_len)
+                let guard_bytes = data
+                    .get(arg_off..arg_off + arg_len)
+                    .ok_or(GameError::Parse("Guard slice out of range"))?
+                    .to_vec();
+
+                Some((func_id, guard_bytes))
             } else {
+                // Skip over the three 32-bit fields we would have read
                 c.seek(SeekFrom::Current(12))
                     .map_err(|_| GameError::Parse("Skip dummy guard fields"))?;
-                (0, 0, 0)
+                None
             };
+
+            // Now read the 3-byte content ID that follows
             let mut cid = [0u8; 3];
             c.read_exact(&mut cid)
                 .map_err(|_| GameError::Parse("Read content_cid"))?;
+
             out.push(ContentEntry {
-                has_guard: has,
-                func_id: fid,
-                arg_off: off,
-                arg_len: len,
-                content_cid: cid,
+                guard,
+                content_id: cid,
             });
         }
 
