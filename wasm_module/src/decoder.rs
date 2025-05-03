@@ -107,6 +107,15 @@ struct IndexEntry {
     length: u32,
 }
 
+#[derive(Clone, Debug)]
+struct ContentEntry {
+    has_guard: bool,
+    func_id: u32,
+    arg_off: u32,
+    arg_len: u32,
+    content_cid: [u8; 3],
+}
+
 /// Represents one outgoing edge from a node.
 #[derive(Serialize)]
 struct EdgeOutput {
@@ -851,6 +860,31 @@ impl CyoaGame {
         c.read_exact(&mut label_cid)
             .map_err(|_| GameError::Parse("Read label"))?;
         Ok((label_cid, dest_cid))
+    }
+
+    fn parse_node_content_seq (data: &[u8]) -> Result<Vec<ContentEntry>, GameError> {
+        let mut c = Cursor::new(data);
+
+        let seq_cnt = c
+            .read_u16::<LittleEndian>()
+            .map_err(|_| GameError::Parse("Read content_seq count"))?;
+        let mut out = Vec::with_capacity(seq_cnt as usize);
+        for _ in 0..seq_cnt {
+            let has = c.read_u8().map_err(|_| GameError::Parse("Read has_guard"))? != 0;
+            let (fid, off, len) = if has {
+                let fid = c.read_u32::<LittleEndian>().map_err(|_| GameError::Parse("Read func_id"))?;
+                let off = c.read_u32::<LittleEndian>().map_err(|_| GameError::Parse("Read arg_off"))?;
+                let len = c.read_u32::<LittleEndian>().map_err(|_| GameError::Parse("Read arg_len"))?;
+                (fid, off, len)
+            } else {
+                c.seek(SeekFrom::Current(12)).map_err(|_| GameError::Parse("Skip dummy"))?;
+                (0,0,0)
+            };
+            let mut cid = [0u8;3];
+            c.read_exact(&mut cid).map_err(|_| GameError::Parse("Read content_cid"))?;
+            out.push(ContentEntry { has_guard: has, func_id: fid, arg_off: off, arg_len: len, content_cid: cid })
+        }
+        Ok(out)
     }
 
     /// Fetches the entire file at `url` without using Range requests.
