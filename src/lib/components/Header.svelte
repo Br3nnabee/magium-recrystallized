@@ -1,6 +1,7 @@
 <script lang="ts">
   import Menu from "./Menu.svelte";
-  import { openMenu } from "$lib/stores/state";
+  import { openMenu, openStats } from "$lib/stores/state";
+  import StatsPanel from './StatsPanel.svelte';
 
   export let book: number;
   export let chapter: number;
@@ -26,9 +27,13 @@
     </h1>
   </div>
 
-  <button class="font-semibold hover:text-neutral-300 text-xl py-2">
+  <button 
+    class="font-semibold hover:text-neutral-300 text-xl py-2"
+    on:click={() => openStats()} 
+  >
     STATS
   </button>
 </header>
 
 <Menu />
+<StatsPanel />
