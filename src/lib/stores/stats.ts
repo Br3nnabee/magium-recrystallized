@@ -1,23 +1,33 @@
 import { writable, type Writable } from 'svelte/store';
 
-export type StatKey =
-  | 'Strength'
-  | 'Speed'
-  | 'Toughness'
-  | 'Reflexes'
-  | 'Hearing'
-  | 'Observation'
-  | 'Ancient Languages'
-  | 'Combat Technique'
-  | 'Premonition'
-  | 'Bluff'
-  | 'Magical sense'
-  | 'Aura hardening';
+/** Base stat keys */
+export const baseKeys = [
+  'Strength',
+  'Speed',
+  'Toughness',
+  'Reflexes',
+  'Hearing',
+  'Observation',
+  'Ancient Languages',
+  'Combat Technique',
+  'Premonition',
+  'Bluff',
+  'Magical sense',
+  'Aura hardening'
+] as const;
+export type StatKey = typeof baseKeys[number];
 
-export type Stats = Record<StatKey, number>;
+/** Extra top-level metrics */
+export type ExtraKey = 'magicalPower' | 'magicalKnowledge' | 'availablePoints';
+
+/** Union of all metric keys */
+export type AllKeys = StatKey | ExtraKey;
+
+/** Central stats shape */
+export type Stats = Record<AllKeys, number>;
 
 export interface StatDelta {
-  key: StatKey;
+  key: AllKeys;
   oldValue: number;
   newValue: number;
   timestamp: Date;
@@ -29,19 +39,15 @@ export interface DeltasStore {
 }
 
 export interface StatsStore extends Writable<Stats> {
-  /** Stream of all applied deltas (immutable) */
   deltas: DeltasStore;
-
-  /** Add (or subtract) an amount to a stat */
-  addStat: (key: StatKey, amount: number) => void;
-
-  /** Clear the delta log */
+  addStat: (key: AllKeys, amount: number) => void;
   resetDeltas: () => void;
 }
 
 function createStatsStore(): StatsStore {
-  // 1) Initialize all stats to zero
-  const initialStats: Stats = {
+  // Initialize all stats + extras
+  const initial: Stats = {
+    // Base stats
     Strength: 0,
     Speed: 0,
     Toughness: 0,
@@ -53,33 +59,62 @@ function createStatsStore(): StatsStore {
     Premonition: 0,
     Bluff: 0,
     'Magical sense': 0,
-    'Aura hardening': 0
+    'Aura hardening': 0,
+
+    // Special metrics
+    magicalPower: 1,
+    magicalKnowledge: 1,
+
+    // Pool of points
+    availablePoints: 4,
   };
 
-  // 2) Core stores
-  const stats = writable<Stats>(initialStats);
+  const stats = writable<Stats>(initial);
   const deltasInternal = writable<StatDelta[]>([]);
 
-  // 3) Expose only subscribe + clear on deltas
   const deltas: DeltasStore = {
     subscribe: deltasInternal.subscribe,
-    clear: () => deltasInternal.set([])
+    clear: () => deltasInternal.set([]),
   };
 
-  // 4) Updating both stats + log atomically
-  function addStat(key: StatKey, amount: number) {
+  function addStat(key: AllKeys, amount: number) {
     stats.update(curr => {
+      let delta = amount;
       const oldValue = curr[key];
-      const newValue = oldValue + amount;
 
-      // log the change
+      // If updating a base stat, enforce max 4 and availablePoints
+      if ((baseKeys as readonly string[]).includes(key)) {
+        const maxIncrease = Math.min(
+          delta,
+          curr.availablePoints,
+          4 - oldValue
+        );
+        if (maxIncrease <= 0) {
+          console.warn(`Cannot increase ${key} beyond limits`);
+          return curr;
+        }
+        delta = maxIncrease;
+      }
+
+      const newValue = oldValue + delta;
+
+      // Log the change
       deltasInternal.update(log => [
         ...log,
         { key, oldValue, newValue, timestamp: new Date() }
       ]);
 
-      // return updated stats
-      return { ...curr, [key]: newValue };
+      // Build next state
+      const next: Stats = {
+        ...curr,
+        [key]: newValue,
+        // Deduct pool if base stat
+        ...((baseKeys as readonly string[]).includes(key) && {
+          availablePoints: curr.availablePoints - delta
+        })
+      };
+
+      return next;
     });
   }
 
@@ -88,17 +123,13 @@ function createStatsStore(): StatsStore {
   }
 
   return {
-    // Writable<Stats> interface
     subscribe: stats.subscribe,
     set: stats.set,
     update: stats.update,
-
-    // our additions
     deltas,
     addStat,
     resetDeltas
   };
 }
 
-/** singleton instance for your app */
 export const statsStore = createStatsStore();
