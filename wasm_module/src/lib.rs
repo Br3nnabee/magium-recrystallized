@@ -24,6 +24,8 @@ extern crate wasm_bindgen;
 /// and the public WASM-bindgen interface.
 mod decoder;
 
+mod wasmtable;
+
 /// Utility helpers and browser integration code.
 ///
 /// The `utils` module provides support routines such as setting
