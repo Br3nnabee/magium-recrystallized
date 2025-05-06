@@ -209,11 +209,11 @@ export function __wasm_start() {
 }
 
 function __wbg_adapter_24(arg0, arg1, arg2) {
-    wasm.closure60_externref_shim(arg0, arg1, arg2);
+    wasm.closure62_externref_shim(arg0, arg1, arg2);
 }
 
 function __wbg_adapter_86(arg0, arg1, arg2, arg3) {
-    wasm.closure73_externref_shim(arg0, arg1, arg2, arg3);
+    wasm.closure74_externref_shim(arg0, arg1, arg2, arg3);
 }
 
 const __wbindgen_enum_RequestMode = ["same-origin", "no-cors", "cors", "navigate"];
@@ -251,25 +251,6 @@ export class CyoaGame {
      * Constructs a new `CyoaGame` instance by probing the remote file
      * at `path` for its total size and HTTP Range support, then fetching
      * and parsing the on‐disk index.
-     *
-     * # Parameters
-     *
-     * - `path`: URL or filesystem path (relative to the site root) of
-     *   the `.cyoa` binary file.
-     *
-     * # Returns
-     *
-     * - `Ok(CyoaGame)`: if the file was probed successfully and its index
-     *   parsed without error.
-     * - `Err(JsValue)`: if there was any HTTP error, missing range support,
-     *   invalid magic, out‐of‐range index pointer, or parse failure.
-     *
-     * # Examples
-     *
-     * ```ignore
-     * // In JavaScript:
-     * const game = await new CyoaGame("/games/mystory.cy");
-     * ```
      * @param {string} path
      */
     constructor(path) {
@@ -281,15 +262,6 @@ export class CyoaGame {
     /**
      * Returns a JavaScript `Array` of all chunk IDs present in the file’s
      * parsed index, formatted as uppercase hex strings.
-     *
-     * Each entry is the 3‐byte chunk identifier, e.g. `"000102"`.
-     *
-     * # Examples
-     *
-     * ```ignore
-     * let ids = game.chunk_ids();              // ["000001", "000002", …]
-     * console.log(ids[0]);                     // "000001"
-     * ```
      * @returns {Array<any>}
      */
     chunk_ids() {
@@ -299,32 +271,7 @@ export class CyoaGame {
     /**
      * Loads the node at the given index (into the parsed index vector),
      * fully fetching its content text and all outgoing edges—with labels
-     * and destination indices—all in one batched request (wherever possible).
-     *
-     * # Parameters
-     *
-     * - `idx`: Zero‐based index into the game’s index entries. Must point
-     *   at a `ChunkType::Node` entry.
-     *
-     * # Returns
-     *
-     * - `Ok(JsValue)`: A JS object with shape `{ content: string, edges: Array< { label: string, dest_idx: number } > }`.
-     * - `Err(JsValue)`: If `idx` is out of range, not a node chunk, or any
-     *   network/parse error occurs.
-     *
-     * # Errors
-     *
-     * - `GameError::Parse("not a node chunk")` if the indexed entry isn’t a node.
-     * - `GameError::Http` if any range‐request fails.
-     * - `GameError::Parse(...)` for TLV or decompression failures.
-     *
-     * # Examples
-     *
-     * ```ignore
-     * let node = await game.load_node_full(3);
-     * console.log(node.content);               // "You stand at a crossroads..."
-     * console.log(node.edges.length);          // e.g. 2
-     * ```
+     * and destination indices—all in one batched request.
      * @param {number} idx
      * @returns {Promise<any>}
      */
@@ -333,28 +280,7 @@ export class CyoaGame {
         return ret;
     }
     /**
-     * Loads the “root” node as specified by the metadata chunk
-     * `ID_ROOT_POINTER`. This is equivalent to finding the metadata
-     * entry whose ID is `[0,0,1]`, reading its value as a node‐chunk
-     * ID, and then calling `load_node_full` on that node’s index.
-     *
-     * # Returns
-     *
-     * - `Ok(JsValue)`: The same structured object as `load_node_full`.
-     * - `Err(JsValue)`: If the metadata chunk is missing, invalid, or any
-     *   subsequent fetch/parse fails.
-     *
-     * # Errors
-     *
-     * - `GameError::MissingRoot` if no metadata chunk with ID `[0,0,1]` is found.
-     * - All other errors are forwarded from `load_node_full`.
-     *
-     * # Examples
-     *
-     * ```ignore
-     * let root = await game.load_root_node_full();
-     * console.log(root.content);               // The starting passage text
-     * ```
+     * Loads the “root” node as specified by the metadata chunk ID_ROOT_POINTER.
      * @returns {Promise<any>}
      */
     load_root_node_full() {
@@ -597,8 +523,8 @@ function __wbg_get_imports() {
         const ret = false;
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper678 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 61, __wbg_adapter_24);
+    imports.wbg.__wbindgen_closure_wrapper710 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 63, __wbg_adapter_24);
         return ret;
     };
     imports.wbg.__wbindgen_debug_string = function(arg0, arg1) {

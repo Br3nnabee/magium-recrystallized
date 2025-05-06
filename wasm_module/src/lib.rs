@@ -22,7 +22,12 @@ extern crate wasm_bindgen;
 /// The `decoder` module implements the `CyoaGame` struct and its associated
 /// methods, including HTTP range probing, TLV parsing, zstd decompression,
 /// and the public WASM-bindgen interface.
-mod decoder;
+mod types;
+mod tlv;
+mod http;
+mod cache;
+
+mod game;
 
 mod wasmtable;
 
