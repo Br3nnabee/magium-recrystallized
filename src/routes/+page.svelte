@@ -1,6 +1,7 @@
 <script lang="ts">
   import { writable } from "svelte/store";
   import { base } from "$app/paths";
+  import data from "$lib/contrib.json"
 
   // Scroll store
   const scrollY = writable(0);
@@ -8,99 +9,20 @@
     scrollY.set(window.scrollY);
   }
 
+  // Window size
+  let window_h0 = $state(0)
+  let window_w0 = $state(0)
+  let window_w = $derived(Math.min(window_h0*1.5, window_w0))
+  let window_h = $derived(Math.min(window_w0*1.6, window_h0))
+  
   // Contributors list
-  // TODO: Break out into seperate file or automate pulling
-  const contributors = [
-    {
-      name: "AIR200",
-      avatar: "https://avatars.githubusercontent.com/u/122616805?s=60&v=4",
-    },
-    {
-      name: "Ark",
-      avatar:
-        "https://cdn.discordapp.com/avatars/766538287543615529/01d9fe98428f370daac5d8222fa8daa8.webp",
-    },
-    {
-      name: "aviewer.",
-      avatar:
-        "https://cdn.discordapp.com/avatars/508345520318840833/e9447291b48f38792191867f249d5eaf.webp",
-    },
-    {
-      name: "Br3nnabee",
-      avatar: "https://avatars.githubusercontent.com/u/142729024?v=4",
-    },
-    {
-      name: "Cheese Guy",
-      avatar:
-        "https://cdn.discordapp.com/avatars/923801513640493117/400d704d3c2e23b55ee323e015f0f65e.webp",
-    },
-    {
-      name: "Colaboi2009",
-      avatar: "https://avatars.githubusercontent.com/u/133582178?s=60&v=4",
-    },
-    {
-      name: "DrongoDyle",
-      avatar:
-        "https://cdn.discordapp.com/avatars/398733259464245249/07526682c7e54cd22a8ff8ded4d7e7c3.webp",
-    },
-    {
-      name: "Evan",
-      avatar:
-        "https://cdn.discordapp.com/avatars/517013816135909377/40e8f4a10d7b542bddee7e66f6222016.webp",
-    },
-    {
-      name: "Hasten",
-      avatar:
-        "https://cdn.discordapp.com/avatars/211244797904683018/eac4f6119cccc6333bf1731dc3d0568f.webp",
-    },
-    {
-      name: "himanshunaidu",
-      avatar: "https://avatars.githubusercontent.com/u/24753890?s=60&v=4",
-    },
-    {
-      name: "Ipcdragon",
-      avatar: "https://avatars.githubusercontent.com/u/179416299?s=60&v=4",
-    },
-    {
-      name: "Lord Lucas",
-      avatar:
-        "https://cdn.discordapp.com/avatars/997523720631504936/6c0e1657353dd69c0d54a9be12d8c56c.webp",
-    },
-    {
-      name: "Moops",
-      avatar:
-        "https://cdn.discordapp.com/avatars/312570716619014144/aaea7b756d9c6136d918a3985918d7aa.webp",
-    },
-    {
-      name: "Rin Est",
-      avatar:
-        "https://cdn.discordapp.com/avatars/286149710031486976/b916d5a1aa7c7c65e0b6b38940872399.webp",
-    },
-    {
-      name: "Treatised War",
-      avatar:
-        "https://cdn.discordapp.com/avatars/953566479926841406/a1413016d7c92ee02ac7276243273a89.webp",
-    },
-    {
-      name: "thuiop",
-      avatar: "https://avatars.githubusercontent.com/u/1338337?s=60&v=4",
-    },
-    {
-      name: "WhateverComic07",
-      avatar:
-        "https://cdn.discordapp.com/avatars/206523849414541314/252c124215ec75412202af3fe8f1129d.webp",
-    },
-    {
-      name: "ZiClaud",
-      avatar: "https://avatars.githubusercontent.com/u/56027915?s=60&v=4",
-    },
-  ];
+  const contributors = data;
 </script>
 
-<svelte:window on:scroll={handleScroll} />
+<svelte:window on:scroll={handleScroll} bind:innerHeight={window_h0} bind:innerWidth={window_w0}/>
 
 <svelte:head>
-  <title>Magium: Recrystallized</title>
+  <title >Magium: Recrystallized</title>
   <meta
     name="description"
     content="Dreams, duels, and death. One mortal's path to magic."
@@ -120,22 +42,12 @@
       <svg
         width="90%"
         height="90%"
-        viewBox="0 0 800 600"
+        viewBox="0 0 {window_w} {window_h}"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
       >
-        <!-- TODO: Change to scale percentage to retain text inside in mobile -->
-        <rect
-          x="10"
-          y="10"
-          width="780"
-          height="580"
-          stroke="#D69E2E"
-          stroke-width="8"
-          rx="40"
-        />
+        <rect x="10" y="10" width="{window_w-20}" height="{window_h-20}" stroke="#D69E2E" stroke-width="8" rx="40" /> 
         <circle cx="50" cy="50" r="20" fill="#D69E2E" />
-        <circle cx="750" cy="550" r="20" fill="#D69E2E" />
+        <circle cx="{window_w-50}" cy="{window_h-50}" r="20" fill="#D69E2E" />
       </svg>
       <img
         src="{base}/image.png"
@@ -145,12 +57,12 @@
     </div>
 
     <h1
-      class="relative z-10 text-5xl md:text-6xl font-black tracking-wide drop-shadow-2xl drop-shadow-black"
+      class="relative z-10 mx-12 text-3xl sm:text-4xl md:text-6xl font-black tracking-wide drop-shadow-2xl drop-shadow-black"
     >
       Magium: Recrystallized
     </h1>
     <p
-      class="mt-4 text-lg md:text-xl max-w-xl leading-relaxed drop-shadow-2xl drop-shadow-black"
+      class="mt-4 mx-12 text-sm md:text-xl max-w-xl leading-relaxed drop-shadow-2xl drop-shadow-black"
     >
       Dreams, duels, and death. One mortal's path to magic.
     </p>
@@ -159,7 +71,7 @@
     >
       <a
         href="{base}/play"
-        class="inline-block px-10 py-4 font-semibold bg-[#D69E2E] text-[#3F1D1D]
+        class="w-48 inline-block px-10 py-4 font-semibold bg-[#D69E2E] text-[#3F1D1D]
         rounded-full hover:bg-[#b9891f] transition-all shadow-inner"
       >
         Play in Browser

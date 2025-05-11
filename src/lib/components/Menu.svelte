@@ -20,6 +20,7 @@
   import SettingsPanel from "./SettingsPanel.svelte";
   import AboutPanel from "./AboutPanel.svelte";
   import { useMaxWidth } from "$lib/stores/displaysettings";
+  import { goto } from "$app/navigation";
 
   // Reference to the menu container for width measurement
   let menuEl: HTMLElement;
@@ -152,6 +153,7 @@
     { label: "Saves", action: () => openMenu(MenuSubstate.Saves) },
     { label: "Settings", action: () => openMenu(MenuSubstate.Settings) },
     { label: "About", action: () => openMenu(MenuSubstate.About) },
+    { label: "Main Menu", action: () => {goto("/"); closeMenu()}}
   ];
 </script>
 
@@ -162,7 +164,7 @@
     on:click={closeMenu}
     aria-hidden="true"
     transition:fade
-  />
+  ></div>
 
   <!-- Main Menu -->
   <div
