@@ -74,7 +74,7 @@
         class="w-48 inline-block px-10 py-4 font-semibold bg-[#D69E2E] text-[#3F1D1D]
         rounded-full hover:bg-[#b9891f] transition-all shadow-inner"
       >
-        Play Now
+        Play in Browser
       </a>
       <a
         href=""
