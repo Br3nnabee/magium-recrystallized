@@ -9,14 +9,20 @@
     scrollY.set(window.scrollY);
   }
 
+  // Window size
+  let window_h0 = $state(0)
+  let window_w0 = $state(0)
+  let window_w = $derived(Math.min(window_h0*1.5, window_w0))
+  let window_h = $derived(Math.min(window_w0*1.6, window_h0))
+  
   // Contributors list
   const contributors = data;
 </script>
 
-<svelte:window on:scroll={handleScroll} />
+<svelte:window on:scroll={handleScroll} bind:innerHeight={window_h0} bind:innerWidth={window_w0}/>
 
 <svelte:head>
-  <title>Magium: Recrystallized</title>
+  <title >Magium: Recrystallized</title>
   <meta
     name="description"
     content="Dreams, duels, and death. One mortal's path to magic."
@@ -36,22 +42,12 @@
       <svg
         width="90%"
         height="90%"
-        viewBox="0 0 800 600"
+        viewBox="0 0 {window_w} {window_h}"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
       >
-        <!-- TODO: Change to scale percentage to retain text inside in mobile -->
-        <rect
-          x="10"
-          y="10"
-          width="780"
-          height="580"
-          stroke="#D69E2E"
-          stroke-width="8"
-          rx="40"
-        />
+        <rect x="10" y="10" width="{window_w-20}" height="{window_h-20}" stroke="#D69E2E" stroke-width="8" rx="40" /> 
         <circle cx="50" cy="50" r="20" fill="#D69E2E" />
-        <circle cx="750" cy="550" r="20" fill="#D69E2E" />
+        <circle cx="{window_w-50}" cy="{window_h-50}" r="20" fill="#D69E2E" />
       </svg>
       <img
         src="{base}/image.png"
@@ -61,12 +57,12 @@
     </div>
 
     <h1
-      class="relative z-10 text-5xl md:text-6xl font-black tracking-wide drop-shadow-2xl drop-shadow-black"
+      class="relative z-10 mx-12 text-3xl sm:text-4xl md:text-6xl font-black tracking-wide drop-shadow-2xl drop-shadow-black"
     >
       Magium: Recrystallized
     </h1>
     <p
-      class="mt-4 text-lg md:text-xl max-w-xl leading-relaxed drop-shadow-2xl drop-shadow-black"
+      class="mt-4 mx-12 text-sm md:text-xl max-w-xl leading-relaxed drop-shadow-2xl drop-shadow-black"
     >
       Dreams, duels, and death. One mortal's path to magic.
     </p>
@@ -75,10 +71,10 @@
     >
       <a
         href="{base}/play"
-        class="inline-block px-10 py-4 font-semibold bg-[#D69E2E] text-[#3F1D1D]
+        class="w-48 inline-block px-10 py-4 font-semibold bg-[#D69E2E] text-[#3F1D1D]
         rounded-full hover:bg-[#b9891f] transition-all shadow-inner"
       >
-        Play in Browser
+        Play Now
       </a>
       <a
         href=""
